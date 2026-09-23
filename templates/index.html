@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sanapur × Hampi Connect</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #26352f;
+            background: #faf7f0;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            background: white;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo {
+            color: #1f5c4a;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .nav-button {
+            background: #d88b35;
+            color: white;
+            text-decoration: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 540px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 70px 20px;
+            background:
+                linear-gradient(
+                    rgba(31, 92, 74, 0.88),
+                    rgba(31, 92, 74, 0.88)
+                );
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            margin: 0 0 20px;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 20px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .main-button {
+            display: inline-block;
+            background: #e39a43;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 9px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .main-button:hover {
+            background: #c97b26;
+        }
+
+        /* SERVICES */
+
+        .section {
+            padding: 70px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            color: #1f5c4a;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #666;
+            font-size: 17px;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px 22px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .icon {
+            font-size: 42px;
+        }
+
+        .card h3 {
+            font-size: 21px;
+            color: #1f5c4a;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* WHY US */
+
+        .why {
+            background: #eef5f0;
+        }
+
+        .features {
+            max-width: 900px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .feature {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            font-size: 17px;
+        }
+
+        .feature strong {
+            color: #1f5c4a;
+        }
+
+        /* CTA */
+
+        .cta {
+            text-align: center;
+            padding: 80px 20px;
+            background: #1f5c4a;
+            color: white;
+        }
+
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #143d32;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        footer p {
+            margin: 5px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 800px) {
+
+            .services {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            nav {
+                padding: 0 20px;
+            }
+
+            .logo {
+                font-size: 17px;
+            }
+
+            .nav-button {
+                padding: 9px 13px;
+                font-size: 14px;
+            }
+
+            .services {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVIGATION -->
+
+<nav>
+
+    <div class="logo">
+        🌴 Sanapur × Hampi Connect
+    </div>
+
+    <a href="/plan" class="nav-button">
+        Plan My Trip
+    </a>
+
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>
+            Your Hampi Trip,<br>
+            Made Simple.
+        </h1>
+
+        <p>
+            Stay • Ride • Explore
+            <br>
+            We connect you with local experiences around Sanapur & Hampi.
+        </p>
+
+        <a href="/plan" class="main-button">
+            🌴 Plan My Trip
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- SERVICES -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <h2>Everything You Need</h2>
+
+        <p>
+            Tell us what you need. We'll help arrange it for you.
+        </p>
+
+    </div>
+
+
+    <div class="services">
+
+
+        <div class="card">
+
+            <div class="icon">🏠</div>
+
+            <h3>Stays</h3>
+
+            <p>
+                Find comfortable local stays around Sanapur and Hampi.
+            </p>
+
+            <a href="/plan" class="nav-button">
+                Find a Stay
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">🛵</div>
+
+            <h3>Bike Rentals</h3>
+
+            <p>
+                Get a bike or scooter to explore Hampi at your own pace.
+            </p>
+
+            <a href="/plan" class="nav-button">
+                Find a Bike
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">🛺</div>
+
+            <h3>Hampi Sightseeing</h3>
+
+            <p>
+                Arrange local sightseeing and explore the Hampi region.
+            </p>
+
+            <a href="/plan" class="nav-button">
+                Explore Hampi
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">🚣</div>
+
+            <h3>Coracle Rides</h3>
+
+            <p>
+                Experience a traditional coracle ride around the region.
+            </p>
+
+            <a href="/plan" class="nav-button">
+                Find a Ride
+            </a>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- WHY US -->
+
+<section class="section why">
+
+    <div class="section-title">
+
+        <h2>Why Sanapur × Hampi Connect?</h2>
+
+        <p>
+            One place to coordinate your Hampi experience.
+        </p>
+
+    </div>
+
+
+    <div class="features">
+
+        <div class="feature">
+            🌴 <strong>Local Coordination</strong><br>
+            We coordinate with local service providers for you.
+        </div>
+
+        <div class="feature">
+            🔎 <strong>Availability Checked</strong><br>
+            We check availability based on your travel date and requirements.
+        </div>
+
+        <div class="feature">
+            💰 <strong>Current Prices</strong><br>
+            Prices are confirmed according to the requested date and service.
+        </div>
+
+        <div class="feature">
+            🤝 <strong>One Simple Contact</strong><br>
+            Tell us what you need instead of contacting different providers yourself.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CALL TO ACTION -->
+
+<section class="cta">
+
+    <h2>Ready to Plan Your Hampi Trip?</h2>
+
+    <p>
+        Tell us your dates and what you need.
+    </p>
+
+    <a href="/plan" class="main-button">
+        Start Planning 🌴
+    </a>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p>
+        🌴 Sanapur × Hampi Connect
+    </p>
+
+    <p>
+        Stay • Ride • Explore
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

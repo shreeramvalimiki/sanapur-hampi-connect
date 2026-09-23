@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Bookings - Sanapur × Hampi Connect
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f1e8;
+            color: #333;
+        }
+
+        header {
+            background: #1f5c4a;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .top h2 {
+            color: #1f5c4a;
+            margin: 0;
+        }
+
+        .back {
+            text-decoration: none;
+            color: #1f5c4a;
+            font-weight: bold;
+        }
+
+        .booking {
+            background: white;
+            padding: 28px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .booking-header h2 {
+            color: #1f5c4a;
+            margin: 0;
+        }
+
+        .confirmed {
+            background: #e4f5e9;
+            color: #247044;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .details {
+            margin-top: 22px;
+            line-height: 1.9;
+        }
+
+        .details strong {
+            color: #1f5c4a;
+        }
+
+        .amount {
+            margin-top: 20px;
+            padding: 20px;
+            background: #eef7f2;
+            border-radius: 10px;
+        }
+
+        .amount-title {
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .price {
+            font-size: 32px;
+            font-weight: bold;
+            color: #d17d20;
+        }
+
+        /* WHATSAPP */
+
+        .contact-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f1f8f3;
+            border-radius: 10px;
+        }
+
+        .contact-box h3 {
+            margin-top: 0;
+            color: #1f5c4a;
+        }
+
+        .whatsapp-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 12px 20px;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .whatsapp-button:hover {
+            background: #1da851;
+        }
+
+        /* PAYMENT */
+
+        .payment-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: #fff8e8;
+            border-radius: 10px;
+        }
+
+        .payment-box h3 {
+            margin-top: 0;
+            color: #1f5c4a;
+        }
+
+        .payment-status {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .pending {
+            color: #b77900;
+        }
+
+        .partial {
+            color: #2878a8;
+        }
+
+        .paid {
+            color: #21834b;
+        }
+
+        .payment-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .payment-buttons button {
+            border: none;
+            padding: 10px 16px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+            background: #1f5c4a;
+            color: white;
+        }
+
+        .payment-buttons button:hover {
+            opacity: 0.85;
+        }
+
+        .empty {
+            background: white;
+            padding: 50px;
+            text-align: center;
+            border-radius: 15px;
+        }
+
+        .empty h2 {
+            color: #1f5c4a;
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                margin: 25px auto;
+            }
+
+            .booking {
+                padding: 20px;
+            }
+
+            .price {
+                font-size: 28px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>
+        🌴 Sanapur × Hampi Connect
+    </h1>
+
+    <p>
+        Confirmed Bookings
+    </p>
+
+</header>
+
+
+<div class="container">
+
+
+    <div class="top">
+
+        <h2>
+            📋 Your Bookings
+        </h2>
+
+        <a href="/admin" class="back">
+            ← Admin Dashboard
+        </a>
+
+    </div>
+
+
+    {% if bookings %}
+
+
+        {% for booking in bookings %}
+
+        <div class="booking">
+
+
+            <div class="booking-header">
+
+                <h2>
+                    Booking #SHC-{{ "%04d" | format(booking["id"]) }}
+                </h2>
+
+                <span class="confirmed">
+                    ✅ Confirmed
+                </span>
+
+            </div>
+
+
+            <div class="details">
+
+                <div>
+                    👤
+                    <strong>Customer:</strong>
+                    {{ booking["name"] }}
+                </div>
+
+                <div>
+                    📱
+                    <strong>WhatsApp:</strong>
+                    {{ booking["phone"] }}
+                </div>
+
+                <div>
+                    📅
+                    <strong>Travel Date:</strong>
+                    {{ booking["travel_date"] }}
+                </div>
+
+                <div>
+                    👥
+                    <strong>People:</strong>
+                    {{ booking["people"] }}
+                </div>
+
+                <div>
+                    🏠🛵🛺🚣
+                    <strong>Services:</strong>
+                    {{ booking["services"] }}
+                </div>
+
+                <div>
+                    🕐
+                    <strong>Preferred Time:</strong>
+                    {{ booking["preferred_time"] }}
+                </div>
+
+                {% if booking["message"] %}
+
+                <div>
+                    📝
+                    <strong>Message:</strong>
+                    {{ booking["message"] }}
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- WHATSAPP -->
+
+            <div class="contact-box">
+
+                <h3>
+                    📱 Contact Customer
+                </h3>
+
+                <p>
+                    Send the customer a WhatsApp message about their booking.
+                </p>
+
+                {% set clean_phone = booking["phone"]
+                    |replace(" ", "")
+                    |replace("+", "")
+                    |replace("-", "") %}
+
+                <a
+                    class="whatsapp-button"
+                    target="_blank"
+                    href="https://wa.me/{{ clean_phone }}?text=Hello%20{{ booking['name'] }},%20this%20is%20Sanapur%20x%20Hampi%20Connect.%20Your%20booking%20SHC-{{ '%04d' | format(booking['id']) }}%20for%20{{ booking['travel_date'] }}%20is%20confirmed.%20Services:%20{{ booking['services'] }}.%20Total:%20Rs.%20{{ booking['quote_amount'] }}.%20Thank%20you!">
+                    💬 Contact on WhatsApp
+                </a>
+
+            </div>
+
+
+            <!-- AMOUNT -->
+
+            <div class="amount">
+
+                <div class="amount-title">
+                    Total Booking Amount
+                </div>
+
+                <div class="price">
+                    ₹{{ booking["quote_amount"] }}
+                </div>
+
+            </div>
+
+
+            <!-- PAYMENT -->
+
+            <div class="payment-box">
+
+                <h3>
+                    💳 Payment Status
+                </h3>
+
+
+                {% if booking["payment_status"] == "Paid" %}
+
+                    <div class="payment-status paid">
+                        🟢 Paid
+                    </div>
+
+                {% elif booking["payment_status"] == "Partially Paid" %}
+
+                    <div class="payment-status partial">
+                        🔵 Partially Paid
+                    </div>
+
+                {% else %}
+
+                    <div class="payment-status pending">
+                        🟡 Pending
+                    </div>
+
+                {% endif %}
+
+
+                <div class="payment-buttons">
+
+
+                    <form
+                        method="POST"
+                        action="/booking/payment/{{ booking['id'] }}"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="payment_status"
+                            value="Pending"
+                        >
+
+                        <button type="submit">
+                            🟡 Pending
+                        </button>
+
+                    </form>
+
+
+                    <form
+                        method="POST"
+                        action="/booking/payment/{{ booking['id'] }}"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="payment_status"
+                            value="Partially Paid"
+                        >
+
+                        <button type="submit">
+                            🔵 Partially Paid
+                        </button>
+
+                    </form>
+
+
+                    <form
+                        method="POST"
+                        action="/booking/payment/{{ booking['id'] }}"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="payment_status"
+                            value="Paid"
+                        >
+
+                        <button type="submit">
+                            🟢 Paid
+                        </button>
+
+                    </form>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+        {% endfor %}
+
+
+    {% else %}
+
+
+        <div class="empty">
+
+            <h2>
+                No confirmed bookings yet.
+            </h2>
+
+            <p>
+                When a customer confirms a quotation,
+                the booking will appear here.
+            </p>
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Plan Your Hampi Trip - Sanapur × Hampi Connect</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f1e8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1f5c4a;
+        }
+
+        .intro {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 7px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        .services {
+            margin-top: 10px;
+        }
+
+        .service-option {
+            font-weight: normal;
+            margin-top: 12px;
+        }
+
+        .service-option input {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 28px;
+            border: none;
+            border-radius: 8px;
+            background-color: #d88b35;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #bd7426;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #1f5c4a;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🌴 Plan Your Hampi Trip</h1>
+
+        <p class="intro">
+            Tell us what you need and we'll help you find the right local options.
+        </p>
+
+        <form method="POST">
+
+            <!-- Customer Name -->
+            <label>Your Name</label>
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Enter your name"
+                required
+            >
+
+
+            <!-- WhatsApp Number -->
+            <label>WhatsApp Number</label>
+
+            <input
+                type="tel"
+                name="phone"
+                placeholder="Enter your WhatsApp number"
+                required
+            >
+
+
+            <!-- Travel Date -->
+            <label>Travel Date</label>
+
+            <input
+                type="date"
+                name="travel_date"
+                required
+            >
+
+
+            <!-- Number of People -->
+            <label>Number of People</label>
+
+            <input
+                type="number"
+                name="people"
+                min="1"
+                placeholder="Example: 2"
+                required
+            >
+
+
+            <!-- Services -->
+            <label>What do you need?</label>
+
+            <div class="services">
+
+                <label class="service-option">
+                    <input
+                        type="checkbox"
+                        name="services"
+                        value="Stay"
+                    >
+                    🏠 Stay
+                </label>
+
+                <label class="service-option">
+                    <input
+                        type="checkbox"
+                        name="services"
+                        value="Bike"
+                    >
+                    🛵 Bike / Scooter
+                </label>
+
+                <label class="service-option">
+                    <input
+                        type="checkbox"
+                        name="services"
+                        value="Sightseeing"
+                    >
+                    🛺 Hampi Sightseeing
+                </label>
+
+                <label class="service-option">
+                    <input
+                        type="checkbox"
+                        name="services"
+                        value="Coracle"
+                    >
+                    🚣 Coracle Ride
+                </label>
+
+            </div>
+
+
+            <!-- Preferred Time -->
+            <label>Preferred Time</label>
+
+            <input
+                type="text"
+                name="preferred_time"
+                placeholder="Example: Morning / Afternoon / Evening"
+            >
+
+
+            <!-- Additional Message -->
+            <label>Anything else?</label>
+
+            <textarea
+                name="message"
+                rows="4"
+                placeholder="Tell us about your requirements"
+            ></textarea>
+
+
+            <!-- Submit -->
+            <button type="submit">
+                Send Request
+            </button>
+
+        </form>
+
+
+        <a href="/" class="back">
+            ← Back to Home
+        </a>
+
+    </div>
+
+</body>
+
+</html>

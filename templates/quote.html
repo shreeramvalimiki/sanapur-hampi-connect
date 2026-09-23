@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Your Hampi Quote - Sanapur × Hampi Connect</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f1e8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            text-align: center;
+            color: #1f5c4a;
+        }
+
+        .logo h1 {
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+        }
+
+        .customer {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border-radius: 10px;
+        }
+
+        .details {
+            margin-top: 25px;
+        }
+
+        .details p {
+            margin: 12px 0;
+        }
+
+        .quote {
+            margin-top: 30px;
+            padding: 25px;
+            text-align: center;
+            background-color: #eef7f2;
+            border-radius: 12px;
+        }
+
+        .quote h2 {
+            color: #1f5c4a;
+        }
+
+        .amount {
+            font-size: 38px;
+            font-weight: bold;
+            color: #d17d20;
+            margin: 15px 0;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 9px 18px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .waiting {
+            background-color: #fff0d6;
+            color: #a45d00;
+        }
+
+        .quoted {
+            background-color: #e7f0ff;
+            color: #24558c;
+        }
+
+        .confirmed {
+            background-color: #e4f5e9;
+            color: #247044;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #1f5c4a;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #16483a;
+        }
+
+        .note {
+            text-align: center;
+            color: #777;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+
+        <h1>🌴 Sanapur × Hampi Connect</h1>
+
+        <p class="subtitle">
+            Your Hampi Trip
+        </p>
+
+    </div>
+
+
+    <div class="customer">
+
+        <h2>Hello {{ customer["name"] }} 👋</h2>
+
+        <div class="details">
+
+            <p>
+                📅 <strong>Travel Date:</strong>
+                {{ customer["travel_date"] }}
+            </p>
+
+            <p>
+                👥 <strong>People:</strong>
+                {{ customer["people"] }}
+            </p>
+
+            <p>
+                🏠🛵🛺🚣 <strong>Services:</strong>
+                {{ customer["services"] }}
+            </p>
+
+            <p>
+                🕐 <strong>Preferred Time:</strong>
+                {{ customer["preferred_time"] }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    {% if customer["status"] == "Pending" %}
+
+        <div class="quote">
+
+            <h2>⏳ Checking Availability</h2>
+
+            <p>
+                We are checking the availability for your requested services.
+            </p>
+
+            <span class="status waiting">
+                🟡 Pending
+            </span>
+
+        </div>
+
+
+    {% elif customer["status"] == "Quote Sent" %}
+
+        <div class="quote">
+
+            <h2>💰 Your Trip Quote</h2>
+
+            <div class="amount">
+                ₹{{ customer["quote_amount"] }}
+            </div>
+
+            <p>
+                Availability has been checked and your quotation is ready.
+            </p>
+
+            <form method="POST"
+                  action="/quote/{{ customer['id'] }}/confirm">
+
+                <button type="submit">
+                    ✅ Confirm My Booking
+                </button>
+
+            </form>
+
+        </div>
+
+
+    {% elif customer["status"] == "Confirmed" %}
+
+        <div class="quote">
+
+            <h2>🎉 Booking Confirmed!</h2>
+
+            <div class="amount">
+                ₹{{ customer["quote_amount"] }}
+            </div>
+
+            <span class="status confirmed">
+                ✅ Confirmed
+            </span>
+
+            <p>
+                Thank you for choosing Sanapur × Hampi Connect.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+
+    <p class="note">
+        We connect you with local experiences around Sanapur & Hampi.
+    </p>
+
+</div>
+
+</body>
+
+</html>

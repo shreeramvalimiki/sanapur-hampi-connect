@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Admin Dashboard - Sanapur × Hampi Connect
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #f5f1e8;
+
+            color: #333;
+        }
+
+
+        /* HEADER */
+
+        header {
+
+            background: #1f5c4a;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 35px 20px;
+        }
+
+
+        header h1 {
+
+            margin: 0;
+
+            font-size: 38px;
+        }
+
+
+        header p {
+
+            font-size: 20px;
+
+            margin-bottom: 0;
+        }
+
+
+        /* MAIN */
+
+        .container {
+
+            max-width: 1200px;
+
+            margin: 40px auto;
+
+            padding: 0 20px;
+        }
+
+
+        /* DASHBOARD CARDS */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 24px;
+
+            margin-bottom: 45px;
+        }
+
+
+        .stat {
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.08);
+
+            text-align: left;
+        }
+
+
+        .stat-title {
+
+            color: #1f5c4a;
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            margin-bottom: 25px;
+        }
+
+
+        .stat-number {
+
+            font-size: 38px;
+
+            font-weight: bold;
+        }
+
+
+        /* BOOKINGS BUTTON */
+
+        .booking-area {
+
+            background: #1f5c4a;
+
+            color: white;
+
+            padding: 25px 30px;
+
+            border-radius: 15px;
+
+            margin-bottom: 45px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .booking-area h2 {
+
+            margin: 0 0 7px;
+        }
+
+
+        .booking-area p {
+
+            margin: 0;
+
+            opacity: 0.9;
+        }
+
+
+        .booking-button {
+
+            display: inline-block;
+
+            background: #e39a43;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 13px 22px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+        }
+
+
+        .booking-button:hover {
+
+            background: #c97b26;
+        }
+
+
+        /* REQUESTS */
+
+        .section-title {
+
+            color: #1f5c4a;
+
+            font-size: 30px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .request {
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 28px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.08);
+        }
+
+
+        .request-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .request-header h2 {
+
+            color: #1f5c4a;
+
+            margin: 0;
+        }
+
+
+        .details {
+
+            margin-top: 20px;
+
+            line-height: 1.9;
+        }
+
+
+        .details strong {
+
+            color: #1f5c4a;
+        }
+
+
+        /* STATUS */
+
+        .status {
+
+            display: inline-block;
+
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            font-weight: bold;
+        }
+
+
+        .status-pending {
+
+            background: #fff1cf;
+
+            color: #a66a00;
+        }
+
+
+        .status-quote {
+
+            background: #e4f0ff;
+
+            color: #28649b;
+        }
+
+
+        .status-confirmed {
+
+            background: #e4f5e9;
+
+            color: #247044;
+        }
+
+
+        /* UPDATE FORM */
+
+        .update-box {
+
+            margin-top: 25px;
+
+            padding: 22px;
+
+            background: #f7f8f5;
+
+            border-radius: 12px;
+        }
+
+
+        .update-box h3 {
+
+            margin-top: 0;
+
+            color: #1f5c4a;
+        }
+
+
+        .form-row {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr auto;
+
+            gap: 15px;
+
+            align-items: end;
+        }
+
+
+        .field label {
+
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+        }
+
+
+        .field input,
+        .field select {
+
+            width: 100%;
+
+            padding: 11px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            background: white;
+        }
+
+
+        .save-button {
+
+            border: none;
+
+            background: #1f5c4a;
+
+            color: white;
+
+            padding: 12px 20px;
+
+            border-radius: 7px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .save-button:hover {
+
+            background: #174638;
+        }
+
+
+        /* CUSTOMER QUOTE */
+
+        .quote-link {
+
+            display: inline-block;
+
+            margin-top: 18px;
+
+            background: #d88b35;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 11px 18px;
+
+            border-radius: 7px;
+
+            font-weight: bold;
+        }
+
+
+        .quote-link:hover {
+
+            background: #bd7426;
+        }
+
+
+        /* EMPTY */
+
+        .empty {
+
+            background: white;
+
+            padding: 50px;
+
+            border-radius: 15px;
+
+            text-align: center;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 850px) {
+
+            .stats {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .form-row {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            header h1 {
+
+                font-size: 28px;
+            }
+
+
+            .stats {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .container {
+
+                margin: 25px auto;
+            }
+
+
+            .stat {
+
+                padding: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+    <h1>
+        🌴 Sanapur × Hampi Connect
+    </h1>
+
+    <p>
+        Admin Dashboard
+    </p>
+
+</header>
+
+
+
+<div class="container">
+
+
+    <!-- STATISTICS -->
+
+    <div class="stats">
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+                📩 New Requests
+            </div>
+
+            <div class="stat-number">
+                {{ total }}
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+                🟡 Pending
+            </div>
+
+            <div class="stat-number">
+                {{ pending }}
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+                💰 Quotes Sent
+            </div>
+
+            <div class="stat-number">
+                {{ quoted }}
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+                ✅ Confirmed
+            </div>
+
+            <div class="stat-number">
+                {{ confirmed }}
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- BOOKINGS -->
+
+    <div class="booking-area">
+
+        <div>
+
+            <h2>
+                📋 Confirmed Bookings
+            </h2>
+
+            <p>
+                View customers who have confirmed their bookings.
+            </p>
+
+        </div>
+
+
+        <a
+            href="/bookings"
+            class="booking-button"
+        >
+            📋 View Bookings
+        </a>
+
+    </div>
+
+
+
+    <!-- CUSTOMER REQUESTS -->
+
+    <h2 class="section-title">
+        Customer Requests
+    </h2>
+
+
+    {% if requests %}
+
+
+        {% for item in requests %}
+
+
+        <div class="request">
+
+
+            <div class="request-header">
+
+
+                <h2>
+                    Request #{{ item["id"] }}
+                </h2>
+
+
+                {% if item["status"] == "Confirmed" %}
+
+                    <span class="status status-confirmed">
+                        ✅ Confirmed
+                    </span>
+
+                {% elif item["status"] == "Quote Sent" %}
+
+                    <span class="status status-quote">
+                        💰 Quote Sent
+                    </span>
+
+                {% else %}
+
+                    <span class="status status-pending">
+                        🟡 Pending
+                    </span>
+
+                {% endif %}
+
+
+            </div>
+
+
+
+            <div class="details">
+
+
+                <div>
+
+                    👤
+
+                    <strong>
+                        Customer:
+                    </strong>
+
+                    {{ item["name"] }}
+
+                </div>
+
+
+                <div>
+
+                    📱
+
+                    <strong>
+                        WhatsApp:
+                    </strong>
+
+                    {{ item["phone"] }}
+
+                </div>
+
+
+                <div>
+
+                    📅
+
+                    <strong>
+                        Travel Date:
+                    </strong>
+
+                    {{ item["travel_date"] }}
+
+                </div>
+
+
+                <div>
+
+                    👥
+
+                    <strong>
+                        People:
+                    </strong>
+
+                    {{ item["people"] }}
+
+                </div>
+
+
+                <div>
+
+                    🏠🛵🛺🚣
+
+                    <strong>
+                        Services:
+                    </strong>
+
+                    {{ item["services"] }}
+
+                </div>
+
+
+                <div>
+
+                    🕐
+
+                    <strong>
+                        Preferred Time:
+                    </strong>
+
+                    {{ item["preferred_time"] }}
+
+                </div>
+
+
+                {% if item["message"] %}
+
+                <div>
+
+                    📝
+
+                    <strong>
+                        Message:
+                    </strong>
+
+                    {{ item["message"] }}
+
+                </div>
+
+                {% endif %}
+
+
+            </div>
+
+
+
+            <!-- UPDATE -->
+
+            {% if item["status"] != "Confirmed" %}
+
+
+            <div class="update-box">
+
+
+                <h3>
+                    💰 Create / Update Quote
+                </h3>
+
+
+                <form
+                    method="POST"
+                    action="/admin/update/{{ item['id'] }}"
+                >
+
+
+                    <div class="form-row">
+
+
+                        <div class="field">
+
+                            <label>
+                                Quote Amount (₹)
+                            </label>
+
+                            <input
+                                type="number"
+                                name="quote_amount"
+                                value="{{ item['quote_amount'] }}"
+                                placeholder="Example: 2500"
+                                min="0"
+                            >
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Status
+                            </label>
+
+                            <select name="status">
+
+                                <option
+                                    value="Pending"
+                                    {% if item["status"] == "Pending" %}
+                                    selected
+                                    {% endif %}
+                                >
+                                    Pending
+                                </option>
+
+
+                                <option
+                                    value="Quote Sent"
+                                    {% if item["status"] == "Quote Sent" %}
+                                    selected
+                                    {% endif %}
+                                >
+                                    Quote Sent
+                                </option>
+
+
+                                <option
+                                    value="Confirmed"
+                                    {% if item["status"] == "Confirmed" %}
+                                    selected
+                                    {% endif %}
+                                >
+                                    Confirmed
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="save-button"
+                        >
+                            Save
+                        </button>
+
+
+                    </div>
+
+
+                </form>
+
+
+                {% if item["quote_amount"] %}
+
+                <a
+                    href="/quote/{{ item['id'] }}"
+                    class="quote-link"
+                    target="_blank"
+                >
+                    🔗 View Customer Quote
+                </a>
+
+                {% endif %}
+
+
+            </div>
+
+
+            {% else %}
+
+
+            <a
+                href="/quote/{{ item['id'] }}"
+                class="quote-link"
+                target="_blank"
+            >
+                🔗 View Booking Quote
+            </a>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    {% else %}
+
+
+        <div class="empty">
+
+            <h2>
+                No customer requests yet.
+            </h2>
+
+            <p>
+                New trip requests will appear here.
+            </p>
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+</body>
+
+</html>
