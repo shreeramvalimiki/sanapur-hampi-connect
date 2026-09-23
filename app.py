@@ -1,16 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 import os
-from datetime import datetime
 
 app = Flask(__name__)
 
-# Database location
+# =========================================================
+# DATABASE
+# =========================================================
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE = os.path.join(BASE_DIR, "requests.db")
 
-
-# ---------------- DATABASE ----------------
 
 def get_db():
     conn = sqlite3.connect(DATABASE)
@@ -22,6 +22,7 @@ def create_database():
     conn = get_db()
     cursor = conn.cursor()
 
+    # Create the main table if it does not already exist
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS trip_requests (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -39,75 +40,102 @@ def create_database():
     """)
 
     conn.commit()
+    conn.close()
 
-    # Add missing columns if an older database exists
-    cursor.execute("PRAGMA table_info(trip_requests)")
-    columns = [row[1] for row in cursor.fetchall()]
 
-    if "status" not in columns:
-        cursor.execute(
-            "ALTER TABLE trip_requests ADD COLUMN status TEXT DEFAULT 'New'"
+def ensure_database():
+    """
+    Makes sure the database and table exist.
+    This is called before database operations.
+    """
+    conn = get_db()
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS trip_requests (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            phone TEXT NOT NULL,
+            travel_date TEXT NOT NULL,
+            people INTEGER NOT NULL,
+            services TEXT,
+            preferred_time TEXT,
+            message TEXT,
+            status TEXT DEFAULT 'New',
+            quote_amount REAL DEFAULT 0,
+            payment_status TEXT DEFAULT 'Pending'
         )
-
-    if "quote_amount" not in columns:
-        cursor.execute(
-            "ALTER TABLE trip_requests ADD COLUMN quote_amount REAL DEFAULT 0"
-        )
-
-    if "payment_status" not in columns:
-        cursor.execute(
-            "ALTER TABLE trip_requests ADD COLUMN payment_status TEXT DEFAULT 'Pending'"
-        )
+    """)
 
     conn.commit()
     conn.close()
 
 
-# IMPORTANT:
-# This runs when Gunicorn/Render starts the application.
+# Create database when Render/Gunicorn starts
 create_database()
 
 
-# ---------------- HOME ----------------
+# =========================================================
+# HOME PAGE
+# =========================================================
 
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
-# ---------------- CUSTOMER PLAN ----------------
+# =========================================================
+# PLAN MY TRIP
+# =========================================================
 
 @app.route("/plan", methods=["GET", "POST"])
 def plan():
 
     if request.method == "POST":
 
+        # Make absolutely sure the table exists
+        ensure_database()
+
         name = request.form.get("name", "").strip()
         phone = request.form.get("phone", "").strip()
         travel_date = request.form.get("travel_date", "").strip()
-        people = request.form.get("people", "1").strip()
+        people_text = request.form.get("people", "1").strip()
 
         services_list = request.form.getlist("services")
         services = ", ".join(services_list)
 
-        preferred_time = request.form.get("preferred_time", "").strip()
-        message = request.form.get("message", "").strip()
+        preferred_time = request.form.get(
+            "preferred_time", ""
+        ).strip()
 
-        # Basic validation
-        if not name or not phone or not travel_date:
-            return "Please fill all required fields.", 400
+        message = request.form.get(
+            "message", ""
+        ).strip()
+
+        # Required fields
+        if not name:
+            return "Please enter your name.", 400
+
+        if not phone:
+            return "Please enter your WhatsApp number.", 400
+
+        if not travel_date:
+            return "Please select your travel date.", 400
 
         try:
-            people = int(people)
-        except ValueError:
+            people = int(people_text)
+        except (ValueError, TypeError):
             people = 1
 
+        if people < 1:
+            people = 1
+
+        # Save request
         conn = get_db()
+
         cursor = conn.cursor()
 
         cursor.execute("""
-            INSERT INTO trip_requests
-            (
+            INSERT INTO trip_requests (
                 name,
                 phone,
                 travel_date,
@@ -139,15 +167,25 @@ def plan():
 
         conn.close()
 
-        return redirect(url_for("quote", request_id=request_id))
+        # Go to quote page
+        return redirect(
+            url_for(
+                "quote",
+                request_id=request_id
+            )
+        )
 
     return render_template("plan.html")
 
 
-# ---------------- ADMIN ----------------
+# =========================================================
+# ADMIN DASHBOARD
+# =========================================================
 
 @app.route("/admin")
 def admin():
+
+    ensure_database()
 
     conn = get_db()
 
@@ -165,17 +203,31 @@ def admin():
     )
 
 
-# ---------------- UPDATE QUOTE / STATUS ----------------
+# =========================================================
+# UPDATE ADMIN REQUEST
+# =========================================================
 
-@app.route("/admin/update/<int:request_id>", methods=["POST"])
+@app.route(
+    "/admin/update/<int:request_id>",
+    methods=["POST"]
+)
 def update_request(request_id):
 
-    quote_amount = request.form.get("quote_amount", "0").strip()
-    status = request.form.get("status", "New").strip()
+    ensure_database()
+
+    quote_amount = request.form.get(
+        "quote_amount",
+        "0"
+    ).strip()
+
+    status = request.form.get(
+        "status",
+        "New"
+    ).strip()
 
     try:
         quote_amount = float(quote_amount)
-    except ValueError:
+    except (ValueError, TypeError):
         quote_amount = 0
 
     conn = get_db()
@@ -198,10 +250,14 @@ def update_request(request_id):
     return redirect(url_for("admin"))
 
 
-# ---------------- QUOTE PAGE ----------------
+# =========================================================
+# QUOTE PAGE
+# =========================================================
 
 @app.route("/quote/<int:request_id>")
 def quote(request_id):
+
+    ensure_database()
 
     conn = get_db()
 
@@ -209,7 +265,9 @@ def quote(request_id):
         SELECT *
         FROM trip_requests
         WHERE id = ?
-    """, (request_id,)).fetchone()
+    """, (
+        request_id,
+    )).fetchone()
 
     conn.close()
 
@@ -222,10 +280,17 @@ def quote(request_id):
     )
 
 
-# ---------------- CUSTOMER CONFIRMS QUOTE ----------------
+# =========================================================
+# CONFIRM QUOTE
+# =========================================================
 
-@app.route("/quote/<int:request_id>/confirm", methods=["POST"])
+@app.route(
+    "/quote/<int:request_id>/confirm",
+    methods=["POST"]
+)
 def confirm_quote(request_id):
+
+    ensure_database()
 
     conn = get_db()
 
@@ -244,10 +309,14 @@ def confirm_quote(request_id):
     return redirect(url_for("bookings"))
 
 
-# ---------------- BOOKINGS ----------------
+# =========================================================
+# CONFIRMED BOOKINGS
+# =========================================================
 
 @app.route("/bookings")
 def bookings():
+
+    ensure_database()
 
     conn = get_db()
 
@@ -266,10 +335,17 @@ def bookings():
     )
 
 
-# ---------------- PAYMENT STATUS ----------------
+# =========================================================
+# PAYMENT STATUS
+# =========================================================
 
-@app.route("/booking/payment/<int:request_id>", methods=["POST"])
+@app.route(
+    "/booking/payment/<int:request_id>",
+    methods=["POST"]
+)
 def update_payment(request_id):
+
+    ensure_database()
 
     payment_status = request.form.get(
         "payment_status",
@@ -302,11 +378,13 @@ def update_payment(request_id):
     return redirect(url_for("bookings"))
 
 
-# ---------------- RUN LOCALLY ----------------
+# =========================================================
+# RUN LOCALLY
+# =========================================================
 
 if __name__ == "__main__":
     app.run(
-        debug=True,
         host="127.0.0.1",
-        port=5000
+        port=5000,
+        debug=True
     )
