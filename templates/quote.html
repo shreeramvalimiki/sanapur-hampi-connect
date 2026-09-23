@@ -1,247 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Your Hampi Quote - Sanapur × Hampi Connect</title>
+    <title>Your Trip Quote | Sanapur × Hampi Connect</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
 
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #f5f1e8;
-            color: #333;
+            background: #f5f7f2;
+            color: #26351f;
+        }
+
+        header {
+            background: #1f4d2b;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 26px;
         }
 
         .container {
-            max-width: 650px;
-            margin: 50px auto;
-            background-color: white;
-            padding: 35px;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
             border-radius: 16px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
         }
 
-        .logo {
-            text-align: center;
-            color: #1f5c4a;
-        }
-
-        .logo h1 {
-            margin-bottom: 5px;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #666;
+        h2 {
+            margin-top: 0;
+            color: #1f4d2b;
         }
 
         .customer {
-            margin-top: 30px;
+            margin-top: 25px;
             padding: 20px;
-            background-color: #f7f7f7;
+            background: #f7f7f7;
             border-radius: 10px;
         }
 
-        .details {
+        .detail {
+            padding: 10px 0;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .detail:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+        .quote-box {
             margin-top: 25px;
-        }
-
-        .details p {
-            margin: 12px 0;
-        }
-
-        .quote {
-            margin-top: 30px;
             padding: 25px;
-            text-align: center;
-            background-color: #eef7f2;
+            background: #eef7ed;
             border-radius: 12px;
-        }
-
-        .quote h2 {
-            color: #1f5c4a;
+            text-align: center;
         }
 
         .amount {
-            font-size: 38px;
+            font-size: 32px;
             font-weight: bold;
-            color: #d17d20;
-            margin: 15px 0;
+            color: #1f4d2b;
+            margin: 10px 0;
         }
 
         .status {
             display: inline-block;
-            padding: 9px 18px;
+            padding: 8px 14px;
             border-radius: 20px;
+            background: #fff3cd;
+            color: #856404;
             font-weight: bold;
-        }
-
-        .waiting {
-            background-color: #fff0d6;
-            color: #a45d00;
-        }
-
-        .quoted {
-            background-color: #e7f0ff;
-            color: #24558c;
-        }
-
-        .confirmed {
-            background-color: #e4f5e9;
-            color: #247044;
         }
 
         button {
             width: 100%;
-            padding: 14px;
-            margin-top: 20px;
+            margin-top: 25px;
+            padding: 15px;
             border: none;
-            border-radius: 8px;
-            background-color: #1f5c4a;
+            border-radius: 10px;
+            background: #1f7a3a;
             color: white;
             font-size: 17px;
+            font-weight: bold;
             cursor: pointer;
         }
 
         button:hover {
-            background-color: #16483a;
+            background: #155c2a;
         }
 
         .note {
-            text-align: center;
-            color: #777;
             margin-top: 20px;
+            color: #666;
             font-size: 14px;
+            text-align: center;
         }
 
+        a {
+            color: #1f7a3a;
+        }
     </style>
-
 </head>
-
 
 <body>
 
+<header>
+    <h1>🌴 Sanapur × Hampi Connect</h1>
+</header>
+
 <div class="container">
 
-    <div class="logo">
+    <div class="card">
 
-        <h1>🌴 Sanapur × Hampi Connect</h1>
+        <h2>Hello {{ trip["name"] }} 👋</h2>
 
-        <p class="subtitle">
-            Your Hampi Trip
+        <p>
+            Thank you for choosing Sanapur × Hampi Connect.
+            Here are your trip details.
+        </p>
+
+        <div class="customer">
+
+            <div class="detail">
+                <span class="label">Name:</span>
+                {{ trip["name"] }}
+            </div>
+
+            <div class="detail">
+                <span class="label">WhatsApp:</span>
+                {{ trip["phone"] }}
+            </div>
+
+            <div class="detail">
+                <span class="label">Travel Date:</span>
+                {{ trip["travel_date"] }}
+            </div>
+
+            <div class="detail">
+                <span class="label">Number of People:</span>
+                {{ trip["people"] }}
+            </div>
+
+            <div class="detail">
+                <span class="label">Services:</span>
+                {{ trip["services"] }}
+            </div>
+
+            {% if trip["preferred_time"] %}
+            <div class="detail">
+                <span class="label">Preferred Time:</span>
+                {{ trip["preferred_time"] }}
+            </div>
+            {% endif %}
+
+            {% if trip["message"] %}
+            <div class="detail">
+                <span class="label">Additional Request:</span>
+                {{ trip["message"] }}
+            </div>
+            {% endif %}
+
+        </div>
+
+        <div class="quote-box">
+
+            <h3>Your Quote</h3>
+
+            {% if trip["quote_amount"] and trip["quote_amount"] > 0 %}
+
+                <div class="amount">
+                    ₹{{ "%.0f"|format(trip["quote_amount"]) }}
+                </div>
+
+                <div class="status">
+                    {{ trip["status"] }}
+                </div>
+
+                {% if trip["status"] != "Confirmed" %}
+
+                <form
+                    method="POST"
+                    action="{{ url_for('confirm_quote', request_id=trip['id']) }}"
+                >
+
+                    <button type="submit">
+                        Confirm My Booking
+                    </button>
+
+                </form>
+
+                {% endif %}
+
+            {% else %}
+
+                <p>
+                    Your request has been received.
+                </p>
+
+                <p>
+                    We are preparing your quote.
+                    Please check again shortly.
+                </p>
+
+                <div class="status">
+                    {{ trip["status"] }}
+                </div>
+
+            {% endif %}
+
+        </div>
+
+        <p class="note">
+            Sanapur × Hampi Connect will coordinate your requested services
+            and share the final booking details with you.
         </p>
 
     </div>
 
-
-    <div class="customer">
-
-        <h2>Hello {{ customer["name"] }} 👋</h2>
-
-        <div class="details">
-
-            <p>
-                📅 <strong>Travel Date:</strong>
-                {{ customer["travel_date"] }}
-            </p>
-
-            <p>
-                👥 <strong>People:</strong>
-                {{ customer["people"] }}
-            </p>
-
-            <p>
-                🏠🛵🛺🚣 <strong>Services:</strong>
-                {{ customer["services"] }}
-            </p>
-
-            <p>
-                🕐 <strong>Preferred Time:</strong>
-                {{ customer["preferred_time"] }}
-            </p>
-
-        </div>
-
-    </div>
-
-
-    {% if customer["status"] == "Pending" %}
-
-        <div class="quote">
-
-            <h2>⏳ Checking Availability</h2>
-
-            <p>
-                We are checking the availability for your requested services.
-            </p>
-
-            <span class="status waiting">
-                🟡 Pending
-            </span>
-
-        </div>
-
-
-    {% elif customer["status"] == "Quote Sent" %}
-
-        <div class="quote">
-
-            <h2>💰 Your Trip Quote</h2>
-
-            <div class="amount">
-                ₹{{ customer["quote_amount"] }}
-            </div>
-
-            <p>
-                Availability has been checked and your quotation is ready.
-            </p>
-
-            <form method="POST"
-                  action="/quote/{{ customer['id'] }}/confirm">
-
-                <button type="submit">
-                    ✅ Confirm My Booking
-                </button>
-
-            </form>
-
-        </div>
-
-
-    {% elif customer["status"] == "Confirmed" %}
-
-        <div class="quote">
-
-            <h2>🎉 Booking Confirmed!</h2>
-
-            <div class="amount">
-                ₹{{ customer["quote_amount"] }}
-            </div>
-
-            <span class="status confirmed">
-                ✅ Confirmed
-            </span>
-
-            <p>
-                Thank you for choosing Sanapur × Hampi Connect.
-            </p>
-
-        </div>
-
-    {% endif %}
-
-
-    <p class="note">
-        We connect you with local experiences around Sanapur & Hampi.
-    </p>
-
 </div>
 
 </body>
-
 </html>
