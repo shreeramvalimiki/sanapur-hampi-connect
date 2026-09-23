@@ -1,107 +1,111 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
+import os
+from datetime import datetime
 
 app = Flask(__name__)
 
+# Database location
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATABASE = os.path.join(BASE_DIR, "requests.db")
 
-# --------------------------------------------------
-# DATABASE SETUP
-# --------------------------------------------------
+
+# ---------------- DATABASE ----------------
+
+def get_db():
+    conn = sqlite3.connect(DATABASE)
+    conn.row_factory = sqlite3.Row
+    return conn
+
 
 def create_database():
+    conn = get_db()
+    cursor = conn.cursor()
 
-    connection = sqlite3.connect("requests.db")
-
-    connection.execute("""
+    cursor.execute("""
         CREATE TABLE IF NOT EXISTS trip_requests (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            phone TEXT,
-            travel_date TEXT,
-            people INTEGER,
+            name TEXT NOT NULL,
+            phone TEXT NOT NULL,
+            travel_date TEXT NOT NULL,
+            people INTEGER NOT NULL,
             services TEXT,
             preferred_time TEXT,
             message TEXT,
-            status TEXT DEFAULT 'Pending',
-            quote_amount TEXT DEFAULT '',
+            status TEXT DEFAULT 'New',
+            quote_amount REAL DEFAULT 0,
             payment_status TEXT DEFAULT 'Pending'
         )
     """)
 
-    columns = [
-        row[1]
-        for row in connection.execute(
-            "PRAGMA table_info(trip_requests)"
-        )
-    ]
+    conn.commit()
 
-    # Add status if old database doesn't have it
+    # Add missing columns if an older database exists
+    cursor.execute("PRAGMA table_info(trip_requests)")
+    columns = [row[1] for row in cursor.fetchall()]
+
     if "status" not in columns:
+        cursor.execute(
+            "ALTER TABLE trip_requests ADD COLUMN status TEXT DEFAULT 'New'"
+        )
 
-        connection.execute("""
-            ALTER TABLE trip_requests
-            ADD COLUMN status TEXT DEFAULT 'Pending'
-        """)
-
-    # Add quote amount if old database doesn't have it
     if "quote_amount" not in columns:
+        cursor.execute(
+            "ALTER TABLE trip_requests ADD COLUMN quote_amount REAL DEFAULT 0"
+        )
 
-        connection.execute("""
-            ALTER TABLE trip_requests
-            ADD COLUMN quote_amount TEXT DEFAULT ''
-        """)
-
-    # Add payment status if old database doesn't have it
     if "payment_status" not in columns:
+        cursor.execute(
+            "ALTER TABLE trip_requests ADD COLUMN payment_status TEXT DEFAULT 'Pending'"
+        )
 
-        connection.execute("""
-            ALTER TABLE trip_requests
-            ADD COLUMN payment_status TEXT DEFAULT 'Pending'
-        """)
-
-    connection.commit()
-    connection.close()
+    conn.commit()
+    conn.close()
 
 
-# --------------------------------------------------
-# HOME
-# --------------------------------------------------
+# IMPORTANT:
+# This runs when Gunicorn/Render starts the application.
+create_database()
+
+
+# ---------------- HOME ----------------
 
 @app.route("/")
 def home():
-
     return render_template("index.html")
 
 
-# --------------------------------------------------
-# PLAN YOUR TRIP
-# --------------------------------------------------
+# ---------------- CUSTOMER PLAN ----------------
 
 @app.route("/plan", methods=["GET", "POST"])
 def plan():
 
     if request.method == "POST":
 
-        name = request.form["name"]
+        name = request.form.get("name", "").strip()
+        phone = request.form.get("phone", "").strip()
+        travel_date = request.form.get("travel_date", "").strip()
+        people = request.form.get("people", "1").strip()
 
-        phone = request.form["phone"]
+        services_list = request.form.getlist("services")
+        services = ", ".join(services_list)
 
-        travel_date = request.form["travel_date"]
+        preferred_time = request.form.get("preferred_time", "").strip()
+        message = request.form.get("message", "").strip()
 
-        people = request.form["people"]
+        # Basic validation
+        if not name or not phone or not travel_date:
+            return "Please fill all required fields.", 400
 
-        services = request.form.getlist("services")
+        try:
+            people = int(people)
+        except ValueError:
+            people = 1
 
-        services_text = ", ".join(services)
+        conn = get_db()
+        cursor = conn.cursor()
 
-        preferred_time = request.form["preferred_time"]
-
-        message = request.form["message"]
-
-
-        connection = sqlite3.connect("requests.db")
-
-        connection.execute("""
+        cursor.execute("""
             INSERT INTO trip_requests
             (
                 name,
@@ -121,111 +125,66 @@ def plan():
             phone,
             travel_date,
             people,
-            services_text,
+            services,
             preferred_time,
             message,
-            "Pending",
-            "",
+            "New",
+            0,
             "Pending"
         ))
 
-        connection.commit()
+        conn.commit()
 
-        connection.close()
+        request_id = cursor.lastrowid
 
+        conn.close()
 
-        return """
-        <h1>Request Received! 🎉</h1>
-
-        <p>
-            Thank you!
-            We will check availability and contact you.
-        </p>
-
-        <a href="/">
-            Back to Home
-        </a>
-        """
-
+        return redirect(url_for("quote", request_id=request_id))
 
     return render_template("plan.html")
 
 
-# --------------------------------------------------
-# ADMIN DASHBOARD
-# --------------------------------------------------
+# ---------------- ADMIN ----------------
 
 @app.route("/admin")
 def admin():
 
-    connection = sqlite3.connect("requests.db")
+    conn = get_db()
 
-    connection.row_factory = sqlite3.Row
-
-
-    requests = connection.execute("""
+    requests_data = conn.execute("""
         SELECT *
         FROM trip_requests
         ORDER BY id DESC
     """).fetchall()
 
-
-    connection.close()
-
-
-    total = len(requests)
-
-    pending = sum(
-        1 for r in requests
-        if r["status"] == "Pending"
-    )
-
-    quoted = sum(
-        1 for r in requests
-        if r["status"] == "Quote Sent"
-    )
-
-    confirmed = sum(
-        1 for r in requests
-        if r["status"] == "Confirmed"
-    )
-
+    conn.close()
 
     return render_template(
         "admin.html",
-        requests=requests,
-        total=total,
-        pending=pending,
-        quoted=quoted,
-        confirmed=confirmed
+        requests=requests_data
     )
 
 
-# --------------------------------------------------
-# UPDATE REQUEST / SEND QUOTE
-# --------------------------------------------------
+# ---------------- UPDATE QUOTE / STATUS ----------------
 
-@app.route(
-    "/admin/update/<int:request_id>",
-    methods=["POST"]
-)
+@app.route("/admin/update/<int:request_id>", methods=["POST"])
 def update_request(request_id):
 
-    quote_amount = request.form["quote_amount"]
+    quote_amount = request.form.get("quote_amount", "0").strip()
+    status = request.form.get("status", "New").strip()
 
-    status = request.form["status"]
+    try:
+        quote_amount = float(quote_amount)
+    except ValueError:
+        quote_amount = 0
 
+    conn = get_db()
 
-    connection = sqlite3.connect("requests.db")
-
-
-    connection.execute("""
+    conn.execute("""
         UPDATE trip_requests
-
         SET
             quote_amount = ?,
             status = ?
-
         WHERE id = ?
     """, (
         quote_amount,
@@ -233,159 +192,121 @@ def update_request(request_id):
         request_id
     ))
 
+    conn.commit()
+    conn.close()
 
-    connection.commit()
-
-    connection.close()
-
-
-    return redirect("/admin")
+    return redirect(url_for("admin"))
 
 
-# --------------------------------------------------
-# CUSTOMER QUOTE PAGE
-# --------------------------------------------------
+# ---------------- QUOTE PAGE ----------------
 
 @app.route("/quote/<int:request_id>")
 def quote(request_id):
 
-    connection = sqlite3.connect("requests.db")
+    conn = get_db()
 
-    connection.row_factory = sqlite3.Row
-
-
-    customer = connection.execute("""
+    trip = conn.execute("""
         SELECT *
         FROM trip_requests
-
         WHERE id = ?
-    """, (
-        request_id,
-    )).fetchone()
+    """, (request_id,)).fetchone()
 
+    conn.close()
 
-    connection.close()
-
-
-    if customer is None:
-
-        return "Quote not found", 404
-
+    if trip is None:
+        return "Booking request not found.", 404
 
     return render_template(
         "quote.html",
-        customer=customer
+        trip=trip
     )
 
 
-# --------------------------------------------------
-# CUSTOMER CONFIRMS BOOKING
-# --------------------------------------------------
+# ---------------- CUSTOMER CONFIRMS QUOTE ----------------
 
-@app.route(
-    "/quote/<int:request_id>/confirm",
-    methods=["POST"]
-)
+@app.route("/quote/<int:request_id>/confirm", methods=["POST"])
 def confirm_quote(request_id):
 
-    connection = sqlite3.connect("requests.db")
+    conn = get_db()
 
-
-    connection.execute("""
+    conn.execute("""
         UPDATE trip_requests
-
-        SET
-            status = 'Confirmed'
-
+        SET status = ?
         WHERE id = ?
     """, (
-        request_id,
+        "Confirmed",
+        request_id
     ))
 
+    conn.commit()
+    conn.close()
 
-    connection.commit()
-
-    connection.close()
-
-
-    return redirect(
-        f"/quote/{request_id}"
-    )
+    return redirect(url_for("bookings"))
 
 
-# --------------------------------------------------
-# BOOKINGS PAGE
-# --------------------------------------------------
+# ---------------- BOOKINGS ----------------
 
 @app.route("/bookings")
 def bookings():
 
-    connection = sqlite3.connect("requests.db")
+    conn = get_db()
 
-    connection.row_factory = sqlite3.Row
-
-
-    bookings = connection.execute("""
+    bookings_data = conn.execute("""
         SELECT *
         FROM trip_requests
-
         WHERE status = 'Confirmed'
-
         ORDER BY id DESC
     """).fetchall()
 
-
-    connection.close()
-
+    conn.close()
 
     return render_template(
         "bookings.html",
-        bookings=bookings
+        bookings=bookings_data
     )
 
 
-# --------------------------------------------------
-# UPDATE PAYMENT STATUS
-# --------------------------------------------------
+# ---------------- PAYMENT STATUS ----------------
 
-@app.route(
-    "/booking/payment/<int:request_id>",
-    methods=["POST"]
-)
+@app.route("/booking/payment/<int:request_id>", methods=["POST"])
 def update_payment(request_id):
 
-    payment_status = request.form["payment_status"]
+    payment_status = request.form.get(
+        "payment_status",
+        "Pending"
+    ).strip()
 
+    allowed_statuses = [
+        "Pending",
+        "Partially Paid",
+        "Paid"
+    ]
 
-    connection = sqlite3.connect("requests.db")
+    if payment_status not in allowed_statuses:
+        payment_status = "Pending"
 
+    conn = get_db()
 
-    connection.execute("""
+    conn.execute("""
         UPDATE trip_requests
-
         SET payment_status = ?
-
         WHERE id = ?
     """, (
         payment_status,
         request_id
     ))
 
+    conn.commit()
+    conn.close()
 
-    connection.commit()
-
-    connection.close()
-
-
-    return redirect("/bookings")
+    return redirect(url_for("bookings"))
 
 
-# --------------------------------------------------
-# START APPLICATION
-# --------------------------------------------------
+# ---------------- RUN LOCALLY ----------------
 
 if __name__ == "__main__":
-
-    create_database()
-
-    app.run(debug=True)
+    app.run(
+        debug=True,
+        host="127.0.0.1",
+        port=5000
+    )
