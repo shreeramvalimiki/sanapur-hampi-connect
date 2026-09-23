@@ -1,8 +1,41 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 import os
+from functools import wraps
 
 app = Flask(__name__)
+
+# =========================================================
+# SECURITY
+# =========================================================
+
+app.secret_key = os.environ.get(
+    "SECRET_KEY",
+    "temporary-secret-change-this"
+)
+
+ADMIN_USERNAME = os.environ.get(
+    "ADMIN_USERNAME",
+    "admin"
+)
+
+ADMIN_PASSWORD = os.environ.get(
+    "ADMIN_PASSWORD",
+    "change-this-password"
+)
+
+
+def admin_required(function):
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+
+        if not session.get("admin_logged_in"):
+            return redirect(url_for("admin_login"))
+
+        return function(*args, **kwargs)
+
+    return wrapper
+
 
 # =========================================================
 # DATABASE
@@ -19,10 +52,10 @@ def get_db():
 
 
 def create_database():
+
     conn = get_db()
     cursor = conn.cursor()
 
-    # Create the main table if it does not already exist
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS trip_requests (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -44,10 +77,7 @@ def create_database():
 
 
 def ensure_database():
-    """
-    Makes sure the database and table exist.
-    This is called before database operations.
-    """
+
     conn = get_db()
 
     conn.execute("""
@@ -70,12 +100,11 @@ def ensure_database():
     conn.close()
 
 
-# Create database when Render/Gunicorn starts
 create_database()
 
 
 # =========================================================
-# HOME PAGE
+# HOME
 # =========================================================
 
 @app.route("/")
@@ -84,7 +113,7 @@ def home():
 
 
 # =========================================================
-# PLAN MY TRIP
+# CUSTOMER PLAN
 # =========================================================
 
 @app.route("/plan", methods=["GET", "POST"])
@@ -92,7 +121,6 @@ def plan():
 
     if request.method == "POST":
 
-        # Make absolutely sure the table exists
         ensure_database()
 
         name = request.form.get("name", "").strip()
@@ -104,14 +132,15 @@ def plan():
         services = ", ".join(services_list)
 
         preferred_time = request.form.get(
-            "preferred_time", ""
+            "preferred_time",
+            ""
         ).strip()
 
         message = request.form.get(
-            "message", ""
+            "message",
+            ""
         ).strip()
 
-        # Required fields
         if not name:
             return "Please enter your name.", 400
 
@@ -129,7 +158,6 @@ def plan():
         if people < 1:
             people = 1
 
-        # Save request
         conn = get_db()
 
         cursor = conn.cursor()
@@ -167,7 +195,6 @@ def plan():
 
         conn.close()
 
-        # Go to quote page
         return redirect(
             url_for(
                 "quote",
@@ -179,10 +206,64 @@ def plan():
 
 
 # =========================================================
+# ADMIN LOGIN
+# =========================================================
+
+@app.route("/admin/login", methods=["GET", "POST"])
+def admin_login():
+
+    if request.method == "POST":
+
+        username = request.form.get(
+            "username",
+            ""
+        ).strip()
+
+        password = request.form.get(
+            "password",
+            ""
+        )
+
+        if (
+            username == ADMIN_USERNAME
+            and password == ADMIN_PASSWORD
+        ):
+            session["admin_logged_in"] = True
+
+            return redirect(
+                url_for("admin")
+            )
+
+        return render_template(
+            "admin_login.html",
+            error="Invalid username or password."
+        )
+
+    return render_template(
+        "admin_login.html"
+    )
+
+
+# =========================================================
+# ADMIN LOGOUT
+# =========================================================
+
+@app.route("/admin/logout")
+def admin_logout():
+
+    session.clear()
+
+    return redirect(
+        url_for("admin_login")
+    )
+
+
+# =========================================================
 # ADMIN DASHBOARD
 # =========================================================
 
 @app.route("/admin")
+@admin_required
 def admin():
 
     ensure_database()
@@ -211,6 +292,7 @@ def admin():
     "/admin/update/<int:request_id>",
     methods=["POST"]
 )
+@admin_required
 def update_request(request_id):
 
     ensure_database()
@@ -247,11 +329,13 @@ def update_request(request_id):
     conn.commit()
     conn.close()
 
-    return redirect(url_for("admin"))
+    return redirect(
+        url_for("admin")
+    )
 
 
 # =========================================================
-# QUOTE PAGE
+# CUSTOMER QUOTE
 # =========================================================
 
 @app.route("/quote/<int:request_id>")
@@ -306,14 +390,17 @@ def confirm_quote(request_id):
     conn.commit()
     conn.close()
 
-    return redirect(url_for("bookings"))
+    return redirect(
+        url_for("bookings")
+    )
 
 
 # =========================================================
-# CONFIRMED BOOKINGS
+# BOOKINGS
 # =========================================================
 
 @app.route("/bookings")
+@admin_required
 def bookings():
 
     ensure_database()
@@ -343,6 +430,7 @@ def bookings():
     "/booking/payment/<int:request_id>",
     methods=["POST"]
 )
+@admin_required
 def update_payment(request_id):
 
     ensure_database()
@@ -375,7 +463,9 @@ def update_payment(request_id):
     conn.commit()
     conn.close()
 
-    return redirect(url_for("bookings"))
+    return redirect(
+        url_for("bookings")
+    )
 
 
 # =========================================================
@@ -383,6 +473,7 @@ def update_payment(request_id):
 # =========================================================
 
 if __name__ == "__main__":
+
     app.run(
         host="127.0.0.1",
         port=5000,
