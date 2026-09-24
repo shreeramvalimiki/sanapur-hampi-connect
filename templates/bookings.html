@@ -5,12 +5,13 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>
-        Bookings - Sanapur × Hampi Connect
-    </title>
+    <title>Confirmed Bookings | Sanapur × Hampi Connect</title>
+
 
     <style>
 
@@ -18,57 +19,87 @@
             box-sizing: border-box;
         }
 
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #f5f1e8;
-            color: #333;
+            background: #f4f7f5;
+            color: #222;
         }
 
+
+        /* HEADER */
+
         header {
-            background: #1f5c4a;
+            background: #12372a;
             color: white;
+            padding: 28px 20px;
             text-align: center;
-            padding: 30px;
         }
+
 
         header h1 {
             margin: 0;
+            font-size: 27px;
         }
+
+
+        header p {
+            margin: 8px 0 0;
+            opacity: 0.9;
+        }
+
+
+        /* MAIN */
 
         .container {
             max-width: 1100px;
-            margin: 40px auto;
+            margin: 30px auto;
             padding: 0 20px;
         }
+
 
         .top {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 15px;
             margin-bottom: 25px;
             flex-wrap: wrap;
-            gap: 15px;
         }
 
+
         .top h2 {
-            color: #1f5c4a;
+            color: #12372a;
             margin: 0;
         }
 
+
         .back {
             text-decoration: none;
-            color: #1f5c4a;
+            background: #12372a;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
             font-weight: bold;
         }
 
+
+        .back:hover {
+            background: #0d2b21;
+        }
+
+
+        /* BOOKING CARD */
+
         .booking {
             background: white;
-            padding: 28px;
+            padding: 25px;
             margin-bottom: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
         }
+
 
         .booking-header {
             display: flex;
@@ -76,47 +107,80 @@
             align-items: center;
             gap: 15px;
             flex-wrap: wrap;
+            padding-bottom: 18px;
+            border-bottom: 1px solid #eee;
         }
+
 
         .booking-header h2 {
-            color: #1f5c4a;
+            color: #12372a;
             margin: 0;
+            font-size: 22px;
         }
+
 
         .confirmed {
-            background: #e4f5e9;
-            color: #247044;
-            padding: 8px 15px;
+            background: #e4f7ea;
+            color: #18723b;
+            padding: 8px 14px;
             border-radius: 20px;
             font-weight: bold;
+            font-size: 14px;
         }
+
+
+        /* DETAILS */
 
         .details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px 25px;
             margin-top: 22px;
-            line-height: 1.9;
         }
+
+
+        .detail-item {
+            background: #f8faf9;
+            padding: 13px;
+            border-radius: 9px;
+            line-height: 1.5;
+        }
+
 
         .details strong {
-            color: #1f5c4a;
+            color: #12372a;
         }
+
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+
+        /* AMOUNT */
 
         .amount {
-            margin-top: 20px;
-            padding: 20px;
+            margin-top: 22px;
+            padding: 22px;
             background: #eef7f2;
-            border-radius: 10px;
+            border-radius: 12px;
+            text-align: center;
         }
+
 
         .amount-title {
-            color: #555;
-            margin-bottom: 8px;
+            color: #666;
+            font-size: 14px;
         }
 
+
         .price {
-            font-size: 32px;
+            font-size: 34px;
             font-weight: bold;
             color: #d17d20;
+            margin-top: 5px;
         }
+
 
         /* WHATSAPP */
 
@@ -124,17 +188,24 @@
             margin-top: 20px;
             padding: 20px;
             background: #f1f8f3;
-            border-radius: 10px;
+            border-radius: 12px;
         }
+
 
         .contact-box h3 {
             margin-top: 0;
-            color: #1f5c4a;
+            color: #12372a;
         }
+
+
+        .contact-box p {
+            color: #666;
+        }
+
 
         .whatsapp-button {
             display: inline-block;
-            margin-top: 10px;
+            margin-top: 8px;
             padding: 12px 20px;
             background: #25D366;
             color: white;
@@ -143,9 +214,11 @@
             font-weight: bold;
         }
 
+
         .whatsapp-button:hover {
-            background: #1da851;
+            background: #1ebe5d;
         }
+
 
         /* PAYMENT */
 
@@ -153,30 +226,38 @@
             margin-top: 20px;
             padding: 20px;
             background: #fff8e8;
-            border-radius: 10px;
+            border: 1px solid #f1d58a;
+            border-radius: 12px;
         }
+
 
         .payment-box h3 {
             margin-top: 0;
-            color: #1f5c4a;
+            color: #12372a;
         }
 
+
         .payment-status {
+            font-size: 18px;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
+
 
         .pending {
             color: #b77900;
         }
 
+
         .partial {
             color: #2878a8;
         }
 
+
         .paid {
             color: #21834b;
         }
+
 
         .payment-buttons {
             display: flex;
@@ -184,43 +265,103 @@
             flex-wrap: wrap;
         }
 
+
+        .payment-buttons form {
+            margin: 0;
+        }
+
+
         .payment-buttons button {
             border: none;
-            padding: 10px 16px;
+            padding: 10px 15px;
             border-radius: 7px;
             cursor: pointer;
             font-weight: bold;
-            background: #1f5c4a;
+            background: #12372a;
             color: white;
         }
+
 
         .payment-buttons button:hover {
             opacity: 0.85;
         }
 
+
+        /* EMPTY */
+
         .empty {
             background: white;
-            padding: 50px;
+            padding: 55px 25px;
             text-align: center;
-            border-radius: 15px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
         }
+
+
+        .empty-icon {
+            font-size: 50px;
+        }
+
 
         .empty h2 {
-            color: #1f5c4a;
+            color: #12372a;
         }
 
-        @media (max-width: 600px) {
+
+        .empty p {
+            color: #777;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
 
             .container {
-                margin: 25px auto;
+                margin: 20px auto;
+                padding: 0 12px;
             }
+
 
             .booking {
-                padding: 20px;
+                padding: 18px;
             }
 
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+
+            .full-width {
+                grid-column: auto;
+            }
+
+
+            .booking-header h2 {
+                font-size: 20px;
+            }
+
+
             .price {
-                font-size: 28px;
+                font-size: 29px;
+            }
+
+
+            .payment-buttons {
+                flex-direction: column;
+            }
+
+
+            .payment-buttons form,
+            .payment-buttons button {
+                width: 100%;
+            }
+
+
+            .whatsapp-button {
+                width: 100%;
+                text-align: center;
             }
 
         }
@@ -232,6 +373,8 @@
 
 <body>
 
+
+<!-- HEADER -->
 
 <header>
 
@@ -249,17 +392,24 @@
 <div class="container">
 
 
+    <!-- TOP -->
+
     <div class="top">
 
         <h2>
-            📋 Your Bookings
+            📋 Your Confirmed Bookings
         </h2>
 
-        <a href="/admin" class="back">
+
+        <a
+            href="/admin"
+            class="back"
+        >
             ← Admin Dashboard
         </a>
 
     </div>
+
 
 
     {% if bookings %}
@@ -267,14 +417,18 @@
 
         {% for booking in bookings %}
 
+
         <div class="booking">
 
+
+            <!-- BOOKING HEADER -->
 
             <div class="booking-header">
 
                 <h2>
                     Booking #SHC-{{ "%04d" | format(booking["id"]) }}
                 </h2>
+
 
                 <span class="confirmed">
                     ✅ Confirmed
@@ -283,55 +437,123 @@
             </div>
 
 
+
+            <!-- DETAILS -->
+
             <div class="details">
 
-                <div>
+
+                <div class="detail-item">
+
                     👤
-                    <strong>Customer:</strong>
+
+                    <strong>
+                        Customer
+                    </strong>
+
+                    <br>
+
                     {{ booking["name"] }}
+
                 </div>
 
-                <div>
+
+                <div class="detail-item">
+
                     📱
-                    <strong>WhatsApp:</strong>
+
+                    <strong>
+                        WhatsApp
+                    </strong>
+
+                    <br>
+
                     {{ booking["phone"] }}
+
                 </div>
 
-                <div>
+
+                <div class="detail-item">
+
                     📅
-                    <strong>Travel Date:</strong>
+
+                    <strong>
+                        Travel Date
+                    </strong>
+
+                    <br>
+
                     {{ booking["travel_date"] }}
+
                 </div>
 
-                <div>
+
+                <div class="detail-item">
+
                     👥
-                    <strong>People:</strong>
+
+                    <strong>
+                        People
+                    </strong>
+
+                    <br>
+
                     {{ booking["people"] }}
+
                 </div>
 
-                <div>
-                    🏠🛵🛺🚣
-                    <strong>Services:</strong>
-                    {{ booking["services"] }}
+
+                <div class="detail-item">
+
+                    🏝️
+
+                    <strong>
+                        Services
+                    </strong>
+
+                    <br>
+
+                    {{ booking["services"] or "Not specified" }}
+
                 </div>
 
-                <div>
+
+                <div class="detail-item">
+
                     🕐
-                    <strong>Preferred Time:</strong>
-                    {{ booking["preferred_time"] }}
+
+                    <strong>
+                        Preferred Time
+                    </strong>
+
+                    <br>
+
+                    {{ booking["preferred_time"] or "Not specified" }}
+
                 </div>
+
 
                 {% if booking["message"] %}
 
-                <div>
+                <div class="detail-item full-width">
+
                     📝
-                    <strong>Message:</strong>
+
+                    <strong>
+                        Customer Message
+                    </strong>
+
+                    <br>
+
                     {{ booking["message"] }}
+
                 </div>
 
                 {% endif %}
 
+
             </div>
+
 
 
             <!-- WHATSAPP -->
@@ -343,22 +565,29 @@
                 </h3>
 
                 <p>
-                    Send the customer a WhatsApp message about their booking.
+                    Send the customer a WhatsApp message about their confirmed booking.
                 </p>
+
 
                 {% set clean_phone = booking["phone"]
                     |replace(" ", "")
                     |replace("+", "")
                     |replace("-", "") %}
 
+
                 <a
                     class="whatsapp-button"
                     target="_blank"
-                    href="https://wa.me/{{ clean_phone }}?text=Hello%20{{ booking['name'] }},%20this%20is%20Sanapur%20x%20Hampi%20Connect.%20Your%20booking%20SHC-{{ '%04d' | format(booking['id']) }}%20for%20{{ booking['travel_date'] }}%20is%20confirmed.%20Services:%20{{ booking['services'] }}.%20Total:%20Rs.%20{{ booking['quote_amount'] }}.%20Thank%20you!">
+
+                    href="https://wa.me/{{ clean_phone }}?text=Hello%20{{ booking['name'] }},%20this%20is%20Sanapur%20x%20Hampi%20Connect.%20Your%20booking%20SHC-{{ '%04d' | format(booking['id']) }}%20for%20{{ booking['travel_date'] }}%20is%20confirmed.%20Services:%20{{ booking['services'] }}.%20Total:%20Rs.%20{{ booking['quote_amount'] }}.%20Thank%20you!"
+                >
+
                     💬 Contact on WhatsApp
+
                 </a>
 
             </div>
+
 
 
             <!-- AMOUNT -->
@@ -369,11 +598,13 @@
                     Total Booking Amount
                 </div>
 
+
                 <div class="price">
-                    ₹{{ booking["quote_amount"] }}
+                    ₹{{ "{:,.0f}".format(booking["quote_amount"] or 0) }}
                 </div>
 
             </div>
+
 
 
             <!-- PAYMENT -->
@@ -406,6 +637,7 @@
                 {% endif %}
 
 
+
                 <div class="payment-buttons">
 
 
@@ -427,6 +659,7 @@
                     </form>
 
 
+
                     <form
                         method="POST"
                         action="/booking/payment/{{ booking['id'] }}"
@@ -443,6 +676,7 @@
                         </button>
 
                     </form>
+
 
 
                     <form
@@ -470,6 +704,7 @@
 
         </div>
 
+
         {% endfor %}
 
 
@@ -478,8 +713,12 @@
 
         <div class="empty">
 
+            <div class="empty-icon">
+                📋
+            </div>
+
             <h2>
-                No confirmed bookings yet.
+                No Confirmed Bookings Yet
             </h2>
 
             <p>
