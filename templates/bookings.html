@@ -569,22 +569,28 @@
                 </p>
 
 
-                {% set clean_phone = booking["phone"]
-                    |replace(" ", "")
-                    |replace("+", "")
-                    |replace("-", "") %}
+                <!--
+                    The JavaScript below automatically converts
+                    Indian 10-digit numbers into the correct
+                    WhatsApp format with country code 91.
+                -->
 
-
-                <a
+                <button
+                    type="button"
                     class="whatsapp-button"
-                    target="_blank"
-
-                    href="https://wa.me/{{ clean_phone }}?text=Hello%20{{ booking['name'] }},%20this%20is%20Sanapur%20x%20Hampi%20Connect.%20Your%20booking%20SHC-{{ '%04d' | format(booking['id']) }}%20for%20{{ booking['travel_date'] }}%20is%20confirmed.%20Services:%20{{ booking['services'] }}.%20Total:%20Rs.%20{{ booking['quote_amount'] }}.%20Thank%20you!"
+                    onclick='contactCustomer(
+                        {{ booking["phone"]|tojson }},
+                        {{ booking["name"]|tojson }},
+                        {{ booking["id"]|tojson }},
+                        {{ booking["travel_date"]|tojson }},
+                        {{ booking["services"]|tojson }},
+                        {{ booking["quote_amount"]|tojson }}
+                    )'
                 >
 
                     💬 Contact on WhatsApp
 
-                </a>
+                </button>
 
             </div>
 
@@ -733,6 +739,106 @@
 
 
 </div>
+
+
+<script>
+
+
+function contactCustomer(
+    phone,
+    name,
+    bookingId,
+    travelDate,
+    services,
+    quoteAmount
+) {
+
+    /*
+        Remove spaces, +, -, brackets and other
+        non-numeric characters.
+    */
+
+    let cleanPhone =
+        String(phone).replace(/\D/g, "");
+
+
+    /*
+        If number starts with 0,
+        remove the 0 first.
+    */
+
+    if (cleanPhone.startsWith("0")) {
+
+        cleanPhone =
+            cleanPhone.substring(1);
+
+    }
+
+
+    /*
+        If it is a normal Indian 10-digit number,
+        add country code 91.
+    */
+
+    if (cleanPhone.length === 10) {
+
+        cleanPhone =
+            "91" + cleanPhone;
+
+    }
+
+
+    /*
+        If the number already starts with 91,
+        leave it as it is.
+    */
+
+    const message =
+
+        "Hello " +
+        name +
+        " 👋\n\n" +
+
+        "This is Sanapur × Hampi Connect. 🌴\n\n" +
+
+        "Your booking is confirmed! ✅\n\n" +
+
+        "📋 Booking: SHC-" +
+        String(bookingId).padStart(4, "0") +
+        "\n" +
+
+        "📅 Travel Date: " +
+        travelDate +
+        "\n" +
+
+        "🏝️ Services: " +
+        (services || "As discussed") +
+        "\n" +
+
+        "💰 Total: ₹" +
+        Number(quoteAmount || 0).toLocaleString("en-IN") +
+        "\n\n" +
+
+        "Thank you for choosing us! 😊";
+
+
+    const whatsappURL =
+
+        "https://wa.me/" +
+        cleanPhone +
+        "?text=" +
+        encodeURIComponent(message);
+
+
+    window.open(
+        whatsappURL,
+        "_blank"
+    );
+
+}
+
+
+</script>
 
 
 </body>
