@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Admin Dashboard | Sanapur × Hampi Connect</title>
 
+
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -18,6 +26,9 @@
             color: #222;
         }
 
+
+        /* HEADER */
+
         header {
             background: #12372a;
             color: white;
@@ -25,16 +36,18 @@
         }
 
         .header-inner {
-            max-width: 1100px;
+            max-width: 1150px;
             margin: auto;
+
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             gap: 15px;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 23px;
             font-weight: bold;
         }
 
@@ -42,39 +55,130 @@
             background: white;
             color: #12372a;
             text-decoration: none;
+
             padding: 9px 16px;
             border-radius: 8px;
+
             font-weight: bold;
         }
 
+
+        /* MAIN */
+
         .container {
-            max-width: 1100px;
+            max-width: 1150px;
             margin: 30px auto;
             padding: 0 20px;
         }
 
-        h1 {
+        .page-title {
             color: #12372a;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: #777;
+            margin-top: 0;
             margin-bottom: 25px;
         }
+
+
+        /* BOOKINGS BUTTON */
+
+        .booking-btn {
+            display: inline-block;
+
+            background: #5b4bdb;
+            color: white;
+
+            padding: 12px 18px;
+            border-radius: 8px;
+
+            text-decoration: none;
+            font-weight: bold;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* CUSTOMER CARD */
 
         .card {
             background: white;
-            border-radius: 15px;
-            padding: 22px;
+
+            border-radius: 16px;
+
+            padding: 24px;
+
             margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.07);
         }
 
+
+        .customer-header {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+
         .customer-name {
-            font-size: 22px;
+            font-size: 23px;
             font-weight: bold;
             color: #12372a;
-            margin-bottom: 15px;
+        }
+
+
+        /* STATUS BADGES */
+
+        .status-badge {
+            display: inline-block;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .status-new {
+            background: #e8eefc;
+            color: #3157a4;
+        }
+
+        .status-quote {
+            background: #fff3d6;
+            color: #9a6700;
+        }
+
+        .status-confirmed {
+            background: #e4f7ea;
+            color: #18723b;
+        }
+
+
+        /* CUSTOMER INFORMATION */
+
+        .info-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 10px 20px;
+
+            margin-bottom: 20px;
         }
 
         .info {
-            margin: 8px 0;
             line-height: 1.5;
         }
 
@@ -83,84 +187,186 @@
             color: #444;
         }
 
+
+        /* QUOTE SECTION */
+
         .quote-box {
             background: #f7faf8;
-            padding: 18px;
+
+            padding: 20px;
+
             border-radius: 12px;
-            margin-top: 20px;
+
+            border: 1px solid #e2ebe5;
         }
+
+        .section-heading {
+            color: #12372a;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            margin-bottom: 15px;
+        }
+
 
         input,
         select {
             width: 100%;
+
             padding: 11px;
+
             margin-top: 6px;
             margin-bottom: 12px;
+
             border: 1px solid #ccc;
+
             border-radius: 7px;
+
             font-size: 15px;
         }
 
+
+        input:focus,
+        select:focus {
+            outline: none;
+
+            border-color: #1f5c4a;
+        }
+
+
         button {
             border: none;
+
             cursor: pointer;
+
             padding: 11px 16px;
+
             border-radius: 8px;
+
             font-size: 15px;
+
             font-weight: bold;
         }
+
 
         .update-btn {
             background: #12372a;
             color: white;
+
             width: 100%;
         }
 
+        .update-btn:hover {
+            background: #0d2b21;
+        }
+
+
+        /* WHATSAPP */
+
         .whatsapp-btn {
-            display: inline-block;
+            display: block;
+
             background: #25D366;
             color: white;
-            padding: 11px 16px;
+
+            width: 100%;
+
+            padding: 12px;
+
             border-radius: 8px;
+
             text-decoration: none;
+
             font-weight: bold;
+
+            text-align: center;
+
             margin-top: 10px;
+
+            border: none;
+
+            cursor: pointer;
         }
 
-        .booking-btn {
-            display: inline-block;
-            background: #5b4bdb;
-            color: white;
-            padding: 11px 16px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-bottom: 20px;
+        .whatsapp-btn:hover {
+            background: #1ebe5d;
         }
+
+
+        /* PAYMENT */
 
         .payment {
-            margin-top: 15px;
-            padding: 12px;
-            border-radius: 8px;
+            margin-top: 18px;
+
+            padding: 16px;
+
+            border-radius: 10px;
+
             background: #fff8e1;
+
+            border: 1px solid #f1d58a;
         }
 
-        .quote-link {
-            font-size: 12px;
-            color: #666;
-            word-break: break-all;
-            margin-top: 12px;
+
+        .payment-title {
+            font-weight: bold;
+
+            margin-bottom: 8px;
         }
+
+
+        .payment-status {
+            font-weight: bold;
+        }
+
+
+        /* SECURE LINK */
+
+        .secure-link {
+            margin-top: 18px;
+
+            padding: 14px;
+
+            background: #f3f3f3;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            color: #666;
+
+            word-break: break-all;
+        }
+
+        .secure-link strong {
+            color: #333;
+        }
+
+
+        /* EMPTY */
 
         .empty {
+            background: white;
+
+            padding: 40px;
+
             text-align: center;
+
+            border-radius: 15px;
+
             color: #777;
-            padding: 30px;
         }
 
-        @media (max-width: 600px) {
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
             .header-inner {
                 flex-direction: column;
+
                 align-items: flex-start;
             }
 
@@ -168,94 +374,224 @@
                 padding: 0 12px;
             }
 
+            .customer-header {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
             .card {
                 padding: 18px;
             }
+
+            .customer-name {
+                font-size: 21px;
+            }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
+<!-- HEADER -->
+
 <header>
+
     <div class="header-inner">
+
         <div class="logo">
             🌴 Sanapur × Hampi Connect
         </div>
 
-        <a href="{{ url_for('admin_logout') }}" class="logout">
+        <a
+            href="{{ url_for('admin_logout') }}"
+            class="logout"
+        >
             Logout
         </a>
+
     </div>
+
 </header>
 
 
+
+<!-- MAIN -->
+
 <div class="container">
 
-    <h1>Admin Dashboard</h1>
 
-    <a href="{{ url_for('bookings') }}" class="booking-btn">
+    <h1 class="page-title">
+        Admin Dashboard
+    </h1>
+
+    <p class="page-subtitle">
+        Manage trip requests, quotations, bookings and payments.
+    </p>
+
+
+    <a
+        href="{{ url_for('bookings') }}"
+        class="booking-btn"
+    >
         📋 View Confirmed Bookings
     </a>
 
 
+
     {% if requests %}
+
 
         {% for trip in requests %}
 
+
         <div class="card">
 
-            <div class="customer-name">
-                {{ trip["name"] }}
+
+            <!-- CUSTOMER HEADER -->
+
+            <div class="customer-header">
+
+                <div class="customer-name">
+                    {{ trip["name"] }}
+                </div>
+
+
+                {% if trip["status"] == "New" %}
+
+                    <span class="status-badge status-new">
+                        🆕 New Request
+                    </span>
+
+                {% elif trip["status"] == "Quote Sent" %}
+
+                    <span class="status-badge status-quote">
+                        💰 Quote Sent
+                    </span>
+
+                {% elif trip["status"] == "Confirmed" %}
+
+                    <span class="status-badge status-confirmed">
+                        ✅ Confirmed
+                    </span>
+
+                {% endif %}
+
             </div>
 
 
-            <div class="info">
-                <span class="label">📱 Contact:</span>
-                {{ trip["phone"] }}
+
+            <!-- CUSTOMER DETAILS -->
+
+            <div class="info-grid">
+
+
+                <div class="info">
+
+                    <span class="label">
+                        📱 Contact:
+                    </span>
+
+                    {{ trip["phone"] }}
+
+                </div>
+
+
+                <div class="info">
+
+                    <span class="label">
+                        📅 Travel Date:
+                    </span>
+
+                    {{ trip["travel_date"] }}
+
+                </div>
+
+
+                <div class="info">
+
+                    <span class="label">
+                        👥 People:
+                    </span>
+
+                    {{ trip["people"] }}
+
+                </div>
+
+
+                <div class="info">
+
+                    <span class="label">
+                        🏝️ Services:
+                    </span>
+
+                    {{ trip["services"] or "Not specified" }}
+
+                </div>
+
+
+                <div class="info">
+
+                    <span class="label">
+                        ⏰ Preferred Time:
+                    </span>
+
+                    {{ trip["preferred_time"] or "Not specified" }}
+
+                </div>
+
+
             </div>
 
-
-            <div class="info">
-                <span class="label">📅 Travel Date:</span>
-                {{ trip["travel_date"] }}
-            </div>
-
-
-            <div class="info">
-                <span class="label">👥 People:</span>
-                {{ trip["people"] }}
-            </div>
-
-
-            <div class="info">
-                <span class="label">🏝️ Services:</span>
-                {{ trip["services"] }}
-            </div>
-
-
-            <div class="info">
-                <span class="label">⏰ Preferred Time:</span>
-                {{ trip["preferred_time"] or "Not specified" }}
-            </div>
 
 
             {% if trip["message"] %}
+
             <div class="info">
-                <span class="label">💬 Message:</span>
+
+                <span class="label">
+                    💬 Customer Message:
+                </span>
+
                 {{ trip["message"] }}
+
             </div>
+
             {% endif %}
 
 
+
+            <!-- QUOTE MANAGEMENT -->
+
             <div class="quote-box">
 
-                <form method="POST"
-                      action="{{ url_for('update_request', request_id=trip['id']) }}">
+
+                <div class="section-heading">
+                    💰 Quote Management
+                </div>
+
+
+                <form
+                    method="POST"
+                    action="{{ url_for('update_request', request_id=trip['id']) }}"
+                >
+
 
                     <label>
-                        <span class="label">Quote Amount (₹)</span>
+                        <span class="label">
+                            Quote Amount (₹)
+                        </span>
                     </label>
+
 
                     <input
                         type="number"
@@ -266,164 +602,301 @@
                     >
 
 
+
                     <label>
-                        <span class="label">Status</span>
+                        <span class="label">
+                            Booking Status
+                        </span>
                     </label>
+
 
                     <select name="status">
 
-                        <option value="New"
-                            {% if trip["status"] == "New" %}selected{% endif %}>
+
+                        <option
+                            value="New"
+                            {% if trip["status"] == "New" %}
+                            selected
+                            {% endif %}
+                        >
                             New
                         </option>
 
-                        <option value="Quote Sent"
-                            {% if trip["status"] == "Quote Sent" %}selected{% endif %}>
+
+                        <option
+                            value="Quote Sent"
+                            {% if trip["status"] == "Quote Sent" %}
+                            selected
+                            {% endif %}
+                        >
                             Quote Sent
                         </option>
 
-                        <option value="Confirmed"
-                            {% if trip["status"] == "Confirmed" %}selected{% endif %}>
+
+                        <option
+                            value="Confirmed"
+                            {% if trip["status"] == "Confirmed" %}
+                            selected
+                            {% endif %}
+                        >
                             Confirmed
                         </option>
+
 
                     </select>
 
 
-                    <button type="submit" class="update-btn">
+
+                    <button
+                        type="submit"
+                        class="update-btn"
+                    >
                         💾 Update Request
                     </button>
+
 
                 </form>
 
 
+
+                <!-- WHATSAPP -->
+
                 {% if trip["status"] == "Quote Sent" %}
 
-                    <button
-                        type="button"
-                        class="whatsapp-btn"
-                        onclick='sendQuoteWhatsApp(
-                            {{ trip["phone"]|tojson }},
-                            {{ trip["name"]|tojson }},
-                            {{ trip["quote_url"]|tojson }},
-                            {{ trip["quote_amount"]|tojson }}
-                        )'
-                    >
-                        📱 Send Quote on WhatsApp
-                    </button>
+
+                <button
+                    type="button"
+                    class="whatsapp-btn"
+
+                    onclick='sendQuoteWhatsApp(
+                        {{ trip["phone"]|tojson }},
+                        {{ trip["name"]|tojson }},
+                        {{ trip["quote_url"]|tojson }},
+                        {{ trip["quote_amount"]|tojson }}
+                    )'
+                >
+
+                    📱 Send Quote on WhatsApp
+
+                </button>
+
 
                 {% endif %}
 
 
+
+                <!-- PAYMENT -->
+
                 <div class="payment">
 
-                    <strong>💳 Payment Status:</strong>
 
-                    {{ trip["payment_status"] }}
+                    <div class="payment-title">
+                        💳 Payment
+                    </div>
+
+
+                    <div class="payment-status">
+
+                        Current Status:
+
+                        <strong>
+                            {{ trip["payment_status"] or "Pending" }}
+                        </strong>
+
+                    </div>
+
+
 
                     {% if trip["status"] == "Confirmed" %}
+
 
                     <form
                         method="POST"
                         action="{{ url_for('update_payment', request_id=trip['id']) }}"
-                        style="margin-top:10px;"
                     >
+
 
                         <select name="payment_status">
 
-                            <option value="Pending"
-                                {% if trip["payment_status"] == "Pending" %}selected{% endif %}>
+
+                            <option
+                                value="Pending"
+                                {% if trip["payment_status"] == "Pending" %}
+                                selected
+                                {% endif %}
+                            >
                                 Pending
                             </option>
 
-                            <option value="Partially Paid"
-                                {% if trip["payment_status"] == "Partially Paid" %}selected{% endif %}>
+
+                            <option
+                                value="Partially Paid"
+                                {% if trip["payment_status"] == "Partially Paid" %}
+                                selected
+                                {% endif %}
+                            >
                                 Partially Paid
                             </option>
 
-                            <option value="Paid"
-                                {% if trip["payment_status"] == "Paid" %}selected{% endif %}>
+
+                            <option
+                                value="Paid"
+                                {% if trip["payment_status"] == "Paid" %}
+                                selected
+                                {% endif %}
+                            >
                                 Paid
                             </option>
 
+
                         </select>
+
+
 
                         <button
                             type="submit"
                             class="update-btn"
                         >
-                            Update Payment
+                            💳 Update Payment
                         </button>
+
 
                     </form>
 
+
                     {% endif %}
+
 
                 </div>
 
 
-                <div class="quote-link">
 
-                    <strong>Secure Quote Link:</strong><br>
+                <!-- SECURE LINK -->
+
+                <div class="secure-link">
+
+                    <strong>
+                        🔐 Secure Quote Link
+                    </strong>
+
+                    <br><br>
 
                     {{ trip["quote_url"] }}
 
                 </div>
 
+
             </div>
 
+
         </div>
+
 
         {% endfor %}
 
+
     {% else %}
 
-        <div class="card empty">
-            No trip requests yet.
+
+        <div class="empty">
+
+            <h2>
+                No Trip Requests Yet
+            </h2>
+
+            <p>
+                Customer requests will appear here.
+            </p>
+
         </div>
 
+
     {% endif %}
+
 
 </div>
 
 
+
 <script>
 
-function sendQuoteWhatsApp(phone, name, quoteLink, quoteAmount) {
 
-    let cleanPhone = String(phone).replace(/\D/g, "");
+function sendQuoteWhatsApp(
+    phone,
+    name,
+    quoteLink,
+    quoteAmount
+) {
 
-    // If Indian number has 10 digits, add country code
+
+    let cleanPhone =
+        String(phone).replace(/\D/g, "");
+
+
+    /*
+       Indian phone number handling
+    */
+
     if (cleanPhone.length === 10) {
+
         cleanPhone = "91" + cleanPhone;
+
     }
 
-    // Remove leading zero if present
+
     if (cleanPhone.startsWith("0")) {
-        cleanPhone = "91" + cleanPhone.substring(1);
+
+        cleanPhone =
+            "91" +
+            cleanPhone.substring(1);
+
     }
+
 
 
     const message =
-        "Hello " + name + " 👋\n\n" +
-        "Your Hampi trip quotation from Sanapur × Hampi Connect is ready. 🌴\n\n" +
-        "💰 Total Quote: ₹" + quoteAmount + "\n\n" +
-        "Please open the link below to view your quote and confirm your booking:\n\n" +
-        quoteLink + "\n\n" +
+
+        "Hello " +
+        name +
+        " 👋\n\n" +
+
+        "Your Hampi trip quotation from " +
+        "Sanapur × Hampi Connect is ready. 🌴\n\n" +
+
+        "💰 Total Quote: ₹" +
+        quoteAmount +
+        "\n\n" +
+
+        "Please open the secure link below " +
+        "to view your quote and confirm your booking:\n\n" +
+
+        quoteLink +
+        "\n\n" +
+
         "Thank you! 😊";
 
 
+
     const whatsappURL =
+
         "https://wa.me/" +
         cleanPhone +
         "?text=" +
         encodeURIComponent(message);
 
 
-    window.open(whatsappURL, "_blank");
+
+    window.open(
+        whatsappURL,
+        "_blank"
+    );
+
 }
+
 
 </script>
 
+
 </body>
+
 </html>
