@@ -2,84 +2,174 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Plan Your Hampi Trip - Sanapur × Hampi Connect</title>
 
     <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #f5f1e8;
+            background: #f5f1e8;
             color: #333;
         }
 
         .container {
-            max-width: 650px;
-            margin: 50px auto;
-            background-color: white;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
             padding: 35px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            text-align: center;
+            color: #1f5c4a;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
 
         h1 {
             text-align: center;
             color: #1f5c4a;
+            margin-bottom: 10px;
+            font-size: 32px;
         }
 
         .intro {
             text-align: center;
             color: #666;
+            line-height: 1.6;
             margin-bottom: 30px;
         }
 
-        label {
+        label.main-label {
             display: block;
-            margin-top: 18px;
+            margin-top: 20px;
             font-weight: bold;
+            color: #333;
         }
 
         input,
         textarea {
             width: 100%;
-            padding: 12px;
+            padding: 13px;
             margin-top: 7px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 7px;
+            border: 1px solid #d2d2d2;
+            border-radius: 8px;
             font-size: 15px;
+            font-family: Arial, sans-serif;
         }
 
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #1f5c4a;
+            box-shadow: 0 0 0 2px rgba(31, 92, 74, 0.08);
+        }
+
+        .hint {
+            font-size: 13px;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        /* SERVICES */
+
         .services {
-            margin-top: 10px;
+            margin-top: 12px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
         }
 
         .service-option {
-            font-weight: normal;
-            margin-top: 12px;
+            position: relative;
         }
 
         .service-option input {
-            width: auto;
-            margin-right: 8px;
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
         }
+
+        .service-box {
+            display: block;
+            background: #f7faf8;
+            border: 2px solid #e2e8e4;
+            padding: 18px 12px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: bold;
+        }
+
+        .service-box:hover {
+            border-color: #1f5c4a;
+            background: #f0f7f3;
+        }
+
+        .service-option input:checked + .service-box {
+            border-color: #1f5c4a;
+            background: #e8f3ed;
+            color: #1f5c4a;
+        }
+
+        .service-icon {
+            display: block;
+            font-size: 30px;
+            margin-bottom: 7px;
+        }
+
+        /* SUBMIT */
 
         button {
             width: 100%;
-            padding: 14px;
-            margin-top: 28px;
+            padding: 15px;
+            margin-top: 30px;
             border: none;
-            border-radius: 8px;
+            border-radius: 9px;
             background-color: #d88b35;
             color: white;
             font-size: 17px;
+            font-weight: bold;
             cursor: pointer;
         }
 
         button:hover {
             background-color: #bd7426;
+        }
+
+        /* WHATSAPP */
+
+        .whatsapp {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            padding: 13px;
+            border-radius: 9px;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .whatsapp:hover {
+            background: #1ebe5d;
         }
 
         .back {
@@ -88,112 +178,234 @@
             margin-top: 20px;
             color: #1f5c4a;
             text-decoration: none;
+            font-weight: bold;
         }
+
+        .secure-note {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 13px;
+            color: #777;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .container {
+                margin: 15px auto;
+                padding: 12px;
+            }
+
+            .card {
+                padding: 25px 18px;
+            }
+
+            h1 {
+                font-size: 27px;
+            }
+
+            .services {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
-    <div class="container">
 
-        <h1>🌴 Plan Your Hampi Trip</h1>
+<div class="container">
+
+    <div class="card">
+
+        <div class="logo">
+            🌴 Sanapur × Hampi Connect
+        </div>
+
+        <h1>
+            Plan Your Hampi Trip
+        </h1>
 
         <p class="intro">
-            Tell us what you need and we'll help you find the right local options.
+            Tell us what you need and we'll help arrange the right local options for your trip.
         </p>
+
 
         <form method="POST">
 
-            <!-- Customer Name -->
-            <label>Your Name</label>
+
+            <!-- NAME -->
+
+            <label class="main-label">
+                Your Name
+            </label>
 
             <input
                 type="text"
                 name="name"
                 placeholder="Enter your name"
+                autocomplete="name"
                 required
             >
 
 
-            <!-- WhatsApp Number -->
-            <label>WhatsApp Number</label>
+            <!-- WHATSAPP -->
+
+            <label class="main-label">
+                WhatsApp Number
+            </label>
 
             <input
                 type="tel"
                 name="phone"
-                placeholder="Enter your WhatsApp number"
+                placeholder="Example: 9876543210"
+                inputmode="numeric"
+                autocomplete="tel"
+                pattern="[0-9+\-\s]{10,15}"
                 required
             >
 
+            <div class="hint">
+                We'll send your quotation to this WhatsApp number.
+            </div>
 
-            <!-- Travel Date -->
-            <label>Travel Date</label>
+
+            <!-- DATE -->
+
+            <label class="main-label">
+                Travel Date
+            </label>
 
             <input
                 type="date"
                 name="travel_date"
+                id="travel_date"
                 required
             >
 
 
-            <!-- Number of People -->
-            <label>Number of People</label>
+            <!-- PEOPLE -->
+
+            <label class="main-label">
+                Number of People
+            </label>
 
             <input
                 type="number"
                 name="people"
                 min="1"
+                max="50"
                 placeholder="Example: 2"
                 required
             >
 
 
-            <!-- Services -->
-            <label>What do you need?</label>
+            <!-- SERVICES -->
+
+            <label class="main-label">
+                What do you need?
+            </label>
 
             <div class="services">
 
+
                 <label class="service-option">
+
                     <input
                         type="checkbox"
                         name="services"
                         value="Stay"
                     >
-                    🏠 Stay
+
+                    <span class="service-box">
+
+                        <span class="service-icon">
+                            🏠
+                        </span>
+
+                        Stay
+
+                    </span>
+
                 </label>
 
+
                 <label class="service-option">
+
                     <input
                         type="checkbox"
                         name="services"
                         value="Bike"
                     >
-                    🛵 Bike / Scooter
+
+                    <span class="service-box">
+
+                        <span class="service-icon">
+                            🛵
+                        </span>
+
+                        Bike / Scooter
+
+                    </span>
+
                 </label>
 
+
                 <label class="service-option">
+
                     <input
                         type="checkbox"
                         name="services"
                         value="Sightseeing"
                     >
-                    🛺 Hampi Sightseeing
+
+                    <span class="service-box">
+
+                        <span class="service-icon">
+                            🛺
+                        </span>
+
+                        Hampi Sightseeing
+
+                    </span>
+
                 </label>
 
+
                 <label class="service-option">
+
                     <input
                         type="checkbox"
                         name="services"
                         value="Coracle"
                     >
-                    🚣 Coracle Ride
+
+                    <span class="service-box">
+
+                        <span class="service-icon">
+                            🚣
+                        </span>
+
+                        Coracle Ride
+
+                    </span>
+
                 </label>
+
 
             </div>
 
 
-            <!-- Preferred Time -->
-            <label>Preferred Time</label>
+            <!-- TIME -->
+
+            <label class="main-label">
+                Preferred Time
+            </label>
 
             <input
                 type="text"
@@ -202,29 +414,73 @@
             >
 
 
-            <!-- Additional Message -->
-            <label>Anything else?</label>
+            <!-- MESSAGE -->
+
+            <label class="main-label">
+                Anything else?
+            </label>
 
             <textarea
                 name="message"
                 rows="4"
-                placeholder="Tell us about your requirements"
+                placeholder="Tell us about your requirements..."
             ></textarea>
 
 
-            <!-- Submit -->
+            <!-- SUBMIT -->
+
             <button type="submit">
-                Send Request
+                🌴 Send Trip Request
             </button>
 
+
         </form>
+
+
+        <!-- WHATSAPP -->
+
+        <a
+            href="https://wa.me/918431007746?text=Hello%20Sanapur%20%C3%97%20Hampi%20Connect%2C%20I%20want%20help%20planning%20my%20Hampi%20trip."
+            class="whatsapp"
+            target="_blank"
+        >
+            💬 Chat With Us on WhatsApp
+        </a>
+
+
+        <div class="secure-note">
+            🔒 Your trip details are used only to prepare your quotation.
+        </div>
 
 
         <a href="/" class="back">
             ← Back to Home
         </a>
 
+
     </div>
+
+</div>
+
+
+<script>
+
+    // Prevent customers from selecting a past travel date
+
+    const today = new Date();
+
+    const year = today.getFullYear();
+
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+
+    const day = String(today.getDate()).padStart(2, "0");
+
+    const todayString = `${year}-${month}-${day}`;
+
+    document.getElementById("travel_date").setAttribute("min", todayString);
+
+</script>
+
 
 </body>
 
