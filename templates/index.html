@@ -48,6 +48,22 @@
             font-weight: bold;
         }
 
+        .whatsapp-button {
+            display: inline-block;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            padding: 14px 25px;
+            border-radius: 9px;
+            font-size: 17px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .whatsapp-button:hover {
+            background: #1ebe5d;
+        }
+
         /* HERO */
 
         .hero {
@@ -151,6 +167,11 @@
             line-height: 1.5;
         }
 
+        .card .nav-button {
+            display: inline-block;
+            margin-top: 8px;
+        }
+
         /* WHY US */
 
         .why {
@@ -195,6 +216,14 @@
             margin-bottom: 30px;
         }
 
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
         /* FOOTER */
 
         footer {
@@ -206,6 +235,12 @@
 
         footer p {
             margin: 5px;
+        }
+
+        .footer-whatsapp {
+            color: #25D366;
+            text-decoration: none;
+            font-weight: bold;
         }
 
         /* MOBILE */
@@ -253,6 +288,16 @@
                 font-size: 17px;
             }
 
+            .whatsapp-button {
+                margin-left: 0;
+                padding: 13px 20px;
+                font-size: 16px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
         }
 
     </style>
@@ -297,6 +342,14 @@
 
         <a href="/plan" class="main-button">
             🌴 Plan My Trip
+        </a>
+
+        <a
+            href="https://wa.me/918431007746?text=Hello%20Sanapur%20%C3%97%20Hampi%20Connect%2C%20I%20want%20help%20planning%20my%20Hampi%20trip."
+            class="whatsapp-button"
+            target="_blank"
+        >
+            💬 Chat on WhatsApp
         </a>
 
     </div>
@@ -447,9 +500,21 @@
         Tell us your dates and what you need.
     </p>
 
-    <a href="/plan" class="main-button">
-        Start Planning 🌴
-    </a>
+    <div class="cta-buttons">
+
+        <a href="/plan" class="main-button">
+            Start Planning 🌴
+        </a>
+
+        <a
+            href="https://wa.me/918431007746?text=Hello%20Sanapur%20%C3%97%20Hampi%20Connect%2C%20I%20want%20help%20planning%20my%20Hampi%20trip."
+            class="whatsapp-button"
+            target="_blank"
+        >
+            💬 Chat on WhatsApp
+        </a>
+
+    </div>
 
 </section>
 
@@ -464,6 +529,17 @@
 
     <p>
         Stay • Ride • Explore
+    </p>
+
+    <p>
+        WhatsApp:
+        <a
+            href="https://wa.me/918431007746"
+            class="footer-whatsapp"
+            target="_blank"
+        >
+            +91 84310 07746
+        </a>
     </p>
 
 </footer>
