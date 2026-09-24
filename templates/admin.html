@@ -12,7 +12,6 @@
 
     <title>Admin Dashboard | Sanapur × Hampi Connect</title>
 
-
     <style>
 
         * {
@@ -21,99 +20,292 @@
 
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7f5;
-            color: #222;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f3f8f5 0%,
+                    #f8faf9 50%,
+                    #eef5f1 100%
+                );
+
+            color: #17231d;
         }
 
 
-        /* HEADER */
+        /* =========================
+           HEADER
+        ========================= */
 
         header {
-            background: #12372a;
+            background:
+                linear-gradient(
+                    135deg,
+                    #0d3327,
+                    #155b43
+                );
+
             color: white;
-            padding: 20px;
+
+            padding: 22px 20px;
+
+            box-shadow:
+                0 8px 30px rgba(13, 51, 39, 0.18);
         }
 
+
         .header-inner {
-            max-width: 1150px;
+            max-width: 1250px;
+
             margin: auto;
 
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
 
-            gap: 15px;
+            gap: 20px;
         }
 
-        .logo {
-            font-size: 23px;
-            font-weight: bold;
+
+        .brand {
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
         }
+
+
+        .brand-icon {
+            width: 46px;
+            height: 46px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                rgba(255,255,255,0.14);
+
+            border:
+                1px solid rgba(255,255,255,0.18);
+
+            border-radius: 14px;
+
+            font-size: 24px;
+        }
+
+
+        .brand-text h2 {
+            margin: 0;
+
+            font-size: 20px;
+
+            letter-spacing: -0.3px;
+        }
+
+
+        .brand-text p {
+            margin: 3px 0 0;
+
+            font-size: 12px;
+
+            color: #cce6da;
+        }
+
 
         .logout {
-            background: white;
-            color: #12372a;
             text-decoration: none;
 
-            padding: 9px 16px;
-            border-radius: 8px;
+            color: #12372a;
 
-            font-weight: bold;
+            background: white;
+
+            padding: 10px 17px;
+
+            border-radius: 10px;
+
+            font-weight: 700;
+
+            font-size: 14px;
+
+            transition: 0.2s;
         }
 
 
-        /* MAIN */
+        .logout:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 6px 15px rgba(0,0,0,0.15);
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
 
         .container {
-            max-width: 1150px;
-            margin: 30px auto;
+            max-width: 1250px;
+
+            margin: 35px auto;
+
             padding: 0 20px;
         }
 
-        .page-title {
-            color: #12372a;
-            margin-bottom: 8px;
+
+        .top-section {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-end;
+
+            gap: 20px;
+
+            margin-bottom: 25px;
         }
+
+
+        .page-title {
+            margin: 0;
+
+            color: #12372a;
+
+            font-size: 32px;
+
+            letter-spacing: -1px;
+        }
+
 
         .page-subtitle {
-            color: #777;
-            margin-top: 0;
-            margin-bottom: 25px;
+            margin: 7px 0 0;
+
+            color: #718078;
+
+            font-size: 14px;
         }
 
-
-        /* BOOKINGS BUTTON */
 
         .booking-btn {
-            display: inline-block;
+            display: inline-flex;
 
-            background: #5b4bdb;
+            align-items: center;
+
+            gap: 8px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #5a45d6,
+                    #7867e8
+                );
+
             color: white;
 
-            padding: 12px 18px;
-            border-radius: 8px;
+            padding: 13px 18px;
+
+            border-radius: 12px;
 
             text-decoration: none;
-            font-weight: bold;
 
-            margin-bottom: 25px;
+            font-weight: 700;
+
+            font-size: 14px;
+
+            box-shadow:
+                0 8px 20px rgba(90,69,214,0.22);
+
+            transition: 0.2s;
         }
 
 
-        /* CUSTOMER CARD */
-
-        .card {
-            background: white;
-
-            border-radius: 16px;
-
-            padding: 24px;
-
-            margin-bottom: 25px;
+        .booking-btn:hover {
+            transform: translateY(-2px);
 
             box-shadow:
-                0 4px 15px rgba(0,0,0,0.07);
+                0 12px 25px rgba(90,69,214,0.28);
+        }
+
+
+        /* =========================
+           DASHBOARD INFO
+        ========================= */
+
+        .dashboard-info {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .live-dot {
+            width: 9px;
+            height: 9px;
+
+            border-radius: 50%;
+
+            background: #20c878;
+
+            box-shadow:
+                0 0 0 5px rgba(32,200,120,0.12);
+        }
+
+
+        .dashboard-info span {
+            font-size: 13px;
+
+            color: #64746c;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           REQUEST CARDS
+        ========================= */
+
+        .card {
+            background:
+                rgba(255,255,255,0.96);
+
+            border:
+                1px solid #e5eee9;
+
+            border-radius: 22px;
+
+            padding: 26px;
+
+            margin-bottom: 24px;
+
+            box-shadow:
+                0 12px 35px rgba(22,55,42,0.07);
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s;
+        }
+
+
+        .card:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 18px 40px rgba(22,55,42,0.10);
         }
 
 
@@ -121,51 +313,115 @@
             display: flex;
 
             justify-content: space-between;
+
             align-items: center;
 
             gap: 15px;
 
-            margin-bottom: 20px;
+            margin-bottom: 22px;
+        }
+
+
+        .customer-left {
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+        }
+
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 15px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #dff1e8,
+                    #bfe2d1
+                );
+
+            color: #155b43;
+
+            font-weight: 800;
+
+            font-size: 19px;
         }
 
 
         .customer-name {
-            font-size: 23px;
-            font-weight: bold;
+            font-size: 20px;
+
+            font-weight: 800;
+
             color: #12372a;
+
+            margin-bottom: 3px;
         }
 
 
-        /* STATUS BADGES */
+        .request-id {
+            color: #89968f;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================
+           STATUS
+        ========================= */
 
         .status-badge {
-            display: inline-block;
+            display: inline-flex;
 
-            padding: 7px 12px;
+            align-items: center;
 
-            border-radius: 20px;
+            gap: 6px;
 
-            font-size: 13px;
-            font-weight: bold;
+            padding: 8px 13px;
+
+            border-radius: 30px;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
         }
 
+
         .status-new {
-            background: #e8eefc;
+            background: #eaf0ff;
+
             color: #3157a4;
         }
 
+
         .status-quote {
-            background: #fff3d6;
+            background: #fff4d9;
+
             color: #9a6700;
         }
 
+
         .status-confirmed {
-            background: #e4f7ea;
+            background: #e4f8ec;
+
             color: #18723b;
         }
 
 
-        /* CUSTOMER INFORMATION */
+        /* =========================
+           CUSTOMER INFORMATION
+        ========================= */
 
         .info-grid {
             display: grid;
@@ -173,41 +429,166 @@
             grid-template-columns:
                 repeat(2, 1fr);
 
-            gap: 10px 20px;
+            gap: 12px;
 
             margin-bottom: 20px;
         }
 
+
         .info {
-            line-height: 1.5;
-        }
-
-        .label {
-            font-weight: bold;
-            color: #444;
-        }
-
-
-        /* QUOTE SECTION */
-
-        .quote-box {
             background: #f7faf8;
 
-            padding: 20px;
+            border:
+                1px solid #e7efea;
 
-            border-radius: 12px;
+            padding: 14px 15px;
 
-            border: 1px solid #e2ebe5;
+            border-radius: 13px;
+
+            line-height: 1.5;
+
+            font-size: 14px;
         }
 
+
+        .label {
+            display: block;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            font-weight: 800;
+
+            color: #7c8982;
+
+            margin-bottom: 4px;
+        }
+
+
+        .info-value {
+            color: #24362c;
+
+            font-weight: 600;
+        }
+
+
+        .message-box {
+            background:
+                #fffdf5;
+
+            border:
+                1px solid #f1e5b8;
+
+            padding: 15px;
+
+            border-radius: 13px;
+
+            margin-bottom: 20px;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           MANAGEMENT GRID
+        ========================= */
+
+        .management-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.2fr 0.8fr;
+
+            gap: 18px;
+        }
+
+
+        .quote-box {
+            background:
+                linear-gradient(
+                    145deg,
+                    #f7fbf9,
+                    #f1f8f4
+                );
+
+            padding: 21px;
+
+            border-radius: 17px;
+
+            border:
+                1px solid #dfece5;
+        }
+
+
+        .payment {
+            background:
+                linear-gradient(
+                    145deg,
+                    #fffaf0,
+                    #fff6df
+                );
+
+            padding: 21px;
+
+            border-radius: 17px;
+
+            border:
+                1px solid #f0dfb1;
+        }
+
+
         .section-heading {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
             color: #12372a;
 
-            font-size: 18px;
+            font-size: 16px;
 
-            font-weight: bold;
+            font-weight: 800;
 
-            margin-bottom: 15px;
+            margin-bottom: 17px;
+        }
+
+
+        .payment-title {
+            color: #765300;
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+            margin-bottom: 12px;
+        }
+
+
+        .payment-status {
+            font-size: 13px;
+
+            color: #756b55;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* =========================
+           FORM
+        ========================= */
+
+        label {
+            font-size: 13px;
+
+            font-weight: 700;
+
+            color: #405148;
         }
 
 
@@ -215,24 +596,35 @@
         select {
             width: 100%;
 
-            padding: 11px;
+            padding: 12px 13px;
 
-            margin-top: 6px;
-            margin-bottom: 12px;
+            margin-top: 7px;
 
-            border: 1px solid #ccc;
+            margin-bottom: 13px;
 
-            border-radius: 7px;
+            border:
+                1px solid #d7e2dc;
 
-            font-size: 15px;
+            border-radius: 10px;
+
+            background: white;
+
+            color: #24362c;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.2s;
         }
 
 
         input:focus,
         select:focus {
-            outline: none;
+            border-color: #24805f;
 
-            border-color: #1f5c4a;
+            box-shadow:
+                0 0 0 4px rgba(36,128,95,0.10);
         }
 
 
@@ -241,155 +633,250 @@
 
             cursor: pointer;
 
-            padding: 11px 16px;
+            padding: 12px 16px;
 
-            border-radius: 8px;
+            border-radius: 10px;
 
-            font-size: 15px;
+            font-size: 14px;
 
-            font-weight: bold;
+            font-weight: 800;
+
+            transition: 0.2s;
         }
 
 
         .update-btn {
-            background: #12372a;
+            background:
+                linear-gradient(
+                    135deg,
+                    #12372a,
+                    #1b6048
+                );
+
             color: white;
 
             width: 100%;
+
+            box-shadow:
+                0 6px 14px rgba(18,55,42,0.15);
         }
+
 
         .update-btn:hover {
-            background: #0d2b21;
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 9px 18px rgba(18,55,42,0.20);
         }
 
 
-        /* WHATSAPP */
+        /* =========================
+           WHATSAPP
+        ========================= */
 
         .whatsapp-btn {
-            display: block;
+            display: flex;
 
-            background: #25D366;
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #20c968,
+                    #25d366
+                );
+
             color: white;
 
             width: 100%;
 
-            padding: 12px;
+            padding: 13px;
 
-            border-radius: 8px;
+            border-radius: 11px;
 
-            text-decoration: none;
+            font-weight: 800;
 
-            font-weight: bold;
+            margin-top: 12px;
 
-            text-align: center;
-
-            margin-top: 10px;
-
-            border: none;
-
-            cursor: pointer;
+            box-shadow:
+                0 7px 17px rgba(37,211,102,0.20);
         }
+
 
         .whatsapp-btn:hover {
-            background: #1ebe5d;
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 10px 20px rgba(37,211,102,0.27);
         }
 
 
-        /* PAYMENT */
-
-        .payment {
-            margin-top: 18px;
-
-            padding: 16px;
-
-            border-radius: 10px;
-
-            background: #fff8e1;
-
-            border: 1px solid #f1d58a;
-        }
-
-
-        .payment-title {
-            font-weight: bold;
-
-            margin-bottom: 8px;
-        }
-
-
-        .payment-status {
-            font-weight: bold;
-        }
-
-
-        /* SECURE LINK */
+        /* =========================
+           SECURE LINK
+        ========================= */
 
         .secure-link {
             margin-top: 18px;
 
-            padding: 14px;
+            padding: 15px;
 
-            background: #f3f3f3;
+            background:
+                #f5f7f6;
 
-            border-radius: 8px;
+            border:
+                1px dashed #cbd8d1;
 
-            font-size: 13px;
+            border-radius: 12px;
 
-            color: #666;
+            font-size: 12px;
+
+            color: #78847e;
 
             word-break: break-all;
         }
 
+
         .secure-link strong {
-            color: #333;
+            display: block;
+
+            color: #3b4c43;
+
+            font-size: 13px;
+
+            margin-bottom: 6px;
         }
 
 
-        /* EMPTY */
+        /* =========================
+           EMPTY
+        ========================= */
 
         .empty {
             background: white;
 
-            padding: 40px;
+            padding: 70px 30px;
 
             text-align: center;
 
-            border-radius: 15px;
+            border-radius: 22px;
 
-            color: #777;
+            border:
+                1px solid #e3ece7;
+
+            box-shadow:
+                0 12px 30px rgba(22,55,42,0.06);
         }
 
 
-        /* MOBILE */
+        .empty-icon {
+            font-size: 48px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .empty h2 {
+            margin-bottom: 7px;
+
+            color: #12372a;
+        }
+
+
+        .empty p {
+            color: #7c8882;
+
+            margin: 0;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            .management-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
 
         @media (max-width: 700px) {
 
-            .header-inner {
-                flex-direction: column;
+            header {
+                padding: 17px 15px;
+            }
 
+
+            .header-inner {
                 align-items: flex-start;
             }
+
+
+            .brand-text h2 {
+                font-size: 17px;
+            }
+
 
             .container {
-                padding: 0 12px;
+                margin: 25px auto;
+
+                padding: 0 13px;
             }
 
-            .customer-header {
+
+            .top-section {
                 flex-direction: column;
 
                 align-items: flex-start;
             }
+
+
+            .page-title {
+                font-size: 27px;
+            }
+
+
+            .booking-btn {
+                width: 100%;
+
+                justify-content: center;
+            }
+
+
+            .card {
+                padding: 18px;
+
+                border-radius: 18px;
+            }
+
+
+            .customer-header {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
 
             .info-grid {
                 grid-template-columns: 1fr;
             }
 
-            .card {
-                padding: 18px;
+
+            .management-grid {
+                grid-template-columns: 1fr;
             }
 
-            .customer-name {
-                font-size: 21px;
+
+            .logout {
+                padding: 9px 13px;
+
+                font-size: 12px;
             }
 
         }
@@ -402,15 +889,34 @@
 <body>
 
 
-<!-- HEADER -->
+<!-- =========================
+     HEADER
+========================= -->
 
 <header>
 
     <div class="header-inner">
 
-        <div class="logo">
-            🌴 Sanapur × Hampi Connect
+        <div class="brand">
+
+            <div class="brand-icon">
+                🌴
+            </div>
+
+            <div class="brand-text">
+
+                <h2>
+                    Sanapur × Hampi Connect
+                </h2>
+
+                <p>
+                    Admin Management Portal
+                </p>
+
+            </div>
+
         </div>
+
 
         <a
             href="{{ url_for('admin_logout') }}"
@@ -425,26 +931,47 @@
 
 
 
-<!-- MAIN -->
+<!-- =========================
+     MAIN
+========================= -->
 
 <div class="container">
 
 
-    <h1 class="page-title">
-        Admin Dashboard
-    </h1>
+    <div class="top-section">
 
-    <p class="page-subtitle">
-        Manage trip requests, quotations, bookings and payments.
-    </p>
+        <div>
+
+            <h1 class="page-title">
+                Admin Dashboard
+            </h1>
+
+            <p class="page-subtitle">
+                Manage trip requests, quotations, bookings and payments.
+            </p>
+
+        </div>
 
 
-    <a
-        href="{{ url_for('bookings') }}"
-        class="booking-btn"
-    >
-        📋 View Confirmed Bookings
-    </a>
+        <a
+            href="{{ url_for('bookings') }}"
+            class="booking-btn"
+        >
+            📋 View Confirmed Bookings
+        </a>
+
+    </div>
+
+
+    <div class="dashboard-info">
+
+        <span class="live-dot"></span>
+
+        <span>
+            Dashboard is active
+        </span>
+
+    </div>
 
 
 
@@ -461,8 +988,34 @@
 
             <div class="customer-header">
 
-                <div class="customer-name">
-                    {{ trip["name"] }}
+
+                <div class="customer-left">
+
+
+                    <div class="avatar">
+
+                        {{ trip["name"][0]|upper }}
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="customer-name">
+
+                            {{ trip["name"] }}
+
+                        </div>
+
+                        <div class="request-id">
+
+                            Request #{{ trip["id"] }}
+
+                        </div>
+
+                    </div>
+
+
                 </div>
 
 
@@ -486,6 +1039,7 @@
 
                 {% endif %}
 
+
             </div>
 
 
@@ -498,10 +1052,12 @@
                 <div class="info">
 
                     <span class="label">
-                        📱 Contact:
+                        📱 Contact
                     </span>
 
-                    {{ trip["phone"] }}
+                    <span class="info-value">
+                        {{ trip["phone"] }}
+                    </span>
 
                 </div>
 
@@ -509,10 +1065,12 @@
                 <div class="info">
 
                     <span class="label">
-                        📅 Travel Date:
+                        📅 Travel Date
                     </span>
 
-                    {{ trip["travel_date"] }}
+                    <span class="info-value">
+                        {{ trip["travel_date"] }}
+                    </span>
 
                 </div>
 
@@ -520,10 +1078,12 @@
                 <div class="info">
 
                     <span class="label">
-                        👥 People:
+                        👥 People
                     </span>
 
-                    {{ trip["people"] }}
+                    <span class="info-value">
+                        {{ trip["people"] }}
+                    </span>
 
                 </div>
 
@@ -531,10 +1091,12 @@
                 <div class="info">
 
                     <span class="label">
-                        🏝️ Services:
+                        🏝️ Services
                     </span>
 
-                    {{ trip["services"] or "Not specified" }}
+                    <span class="info-value">
+                        {{ trip["services"] or "Not specified" }}
+                    </span>
 
                 </div>
 
@@ -542,10 +1104,12 @@
                 <div class="info">
 
                     <span class="label">
-                        ⏰ Preferred Time:
+                        ⏰ Preferred Time
                     </span>
 
-                    {{ trip["preferred_time"] or "Not specified" }}
+                    <span class="info-value">
+                        {{ trip["preferred_time"] or "Not specified" }}
+                    </span>
 
                 </div>
 
@@ -556,10 +1120,10 @@
 
             {% if trip["message"] %}
 
-            <div class="info">
+            <div class="message-box">
 
                 <span class="label">
-                    💬 Customer Message:
+                    💬 Customer Message
                 </span>
 
                 {{ trip["message"] }}
@@ -570,118 +1134,118 @@
 
 
 
-            <!-- QUOTE MANAGEMENT -->
+            <!-- MANAGEMENT -->
 
-            <div class="quote-box">
-
-
-                <div class="section-heading">
-                    💰 Quote Management
-                </div>
+            <div class="management-grid">
 
 
-                <form
-                    method="POST"
-                    action="{{ url_for('update_request', request_id=trip['id']) }}"
-                >
+                <!-- QUOTE -->
+
+                <div class="quote-box">
 
 
-                    <label>
-                        <span class="label">
-                            Quote Amount (₹)
-                        </span>
-                    </label>
+                    <div class="section-heading">
+                        💰 Quote Management
+                    </div>
 
 
-                    <input
-                        type="number"
-                        name="quote_amount"
-                        value="{{ trip['quote_amount'] or 0 }}"
-                        min="0"
-                        required
+                    <form
+                        method="POST"
+                        action="{{ url_for('update_request', request_id=trip['id']) }}"
                     >
 
 
+                        <label>
+                            Quote Amount (₹)
+                        </label>
 
-                    <label>
-                        <span class="label">
+
+                        <input
+                            type="number"
+                            name="quote_amount"
+                            value="{{ trip['quote_amount'] or 0 }}"
+                            min="0"
+                            required
+                        >
+
+
+                        <label>
                             Booking Status
-                        </span>
-                    </label>
+                        </label>
 
 
-                    <select name="status">
+                        <select name="status">
+
+                            <option
+                                value="New"
+                                {% if trip["status"] == "New" %}
+                                selected
+                                {% endif %}
+                            >
+                                New
+                            </option>
 
 
-                        <option
-                            value="New"
-                            {% if trip["status"] == "New" %}
-                            selected
-                            {% endif %}
+                            <option
+                                value="Quote Sent"
+                                {% if trip["status"] == "Quote Sent" %}
+                                selected
+                                {% endif %}
+                            >
+                                Quote Sent
+                            </option>
+
+
+                            <option
+                                value="Confirmed"
+                                {% if trip["status"] == "Confirmed" %}
+                                selected
+                                {% endif %}
+                            >
+                                Confirmed
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            type="submit"
+                            class="update-btn"
                         >
-                            New
-                        </option>
+                            💾 Update Request
+                        </button>
 
 
-                        <option
-                            value="Quote Sent"
-                            {% if trip["status"] == "Quote Sent" %}
-                            selected
-                            {% endif %}
-                        >
-                            Quote Sent
-                        </option>
+                    </form>
 
 
-                        <option
-                            value="Confirmed"
-                            {% if trip["status"] == "Confirmed" %}
-                            selected
-                            {% endif %}
-                        >
-                            Confirmed
-                        </option>
 
+                    <!-- WHATSAPP -->
 
-                    </select>
-
+                    {% if trip["status"] == "Quote Sent" %}
 
 
                     <button
-                        type="submit"
-                        class="update-btn"
+                        type="button"
+                        class="whatsapp-btn"
+
+                        onclick='sendQuoteWhatsApp(
+                            {{ trip["phone"]|tojson }},
+                            {{ trip["name"]|tojson }},
+                            {{ trip["quote_url"]|tojson }},
+                            {{ trip["quote_amount"]|tojson }}
+                        )'
                     >
-                        💾 Update Request
+
+                        💬 Send Quote on WhatsApp
+
                     </button>
 
 
-                </form>
+                    {% endif %}
 
 
-
-                <!-- WHATSAPP -->
-
-                {% if trip["status"] == "Quote Sent" %}
-
-
-                <button
-                    type="button"
-                    class="whatsapp-btn"
-
-                    onclick='sendQuoteWhatsApp(
-                        {{ trip["phone"]|tojson }},
-                        {{ trip["name"]|tojson }},
-                        {{ trip["quote_url"]|tojson }},
-                        {{ trip["quote_amount"]|tojson }}
-                    )'
-                >
-
-                    📱 Send Quote on WhatsApp
-
-                </button>
-
-
-                {% endif %}
+                </div>
 
 
 
@@ -714,6 +1278,11 @@
                         method="POST"
                         action="{{ url_for('update_payment', request_id=trip['id']) }}"
                     >
+
+
+                        <label>
+                            Payment Status
+                        </label>
 
 
                         <select name="payment_status">
@@ -752,7 +1321,6 @@
                         </select>
 
 
-
                         <button
                             type="submit"
                             class="update-btn"
@@ -770,21 +1338,19 @@
                 </div>
 
 
+            </div>
 
-                <!-- SECURE LINK -->
 
-                <div class="secure-link">
 
-                    <strong>
-                        🔐 Secure Quote Link
-                    </strong>
+            <!-- SECURE LINK -->
 
-                    <br><br>
+            <div class="secure-link">
 
-                    {{ trip["quote_url"] }}
+                <strong>
+                    🔐 Secure Quote Link
+                </strong>
 
-                </div>
-
+                {{ trip["quote_url"] }}
 
             </div>
 
@@ -799,6 +1365,10 @@
 
 
         <div class="empty">
+
+            <div class="empty-icon">
+                🌴
+            </div>
 
             <h2>
                 No Trip Requests Yet
@@ -834,12 +1404,13 @@ function sendQuoteWhatsApp(
 
 
     /*
-       Indian phone number handling
+        Indian phone number handling
     */
 
     if (cleanPhone.length === 10) {
 
-        cleanPhone = "91" + cleanPhone;
+        cleanPhone =
+            "91" + cleanPhone;
 
     }
 
@@ -851,7 +1422,6 @@ function sendQuoteWhatsApp(
             cleanPhone.substring(1);
 
     }
-
 
 
     const message =
@@ -876,14 +1446,12 @@ function sendQuoteWhatsApp(
         "Thank you! 😊";
 
 
-
     const whatsappURL =
 
         "https://wa.me/" +
         cleanPhone +
         "?text=" +
         encodeURIComponent(message);
-
 
 
     window.open(
