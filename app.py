@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-import sqlite3
 import os
+import psycopg
+from psycopg.rows import dict_row
 from functools import wraps
 
 app = Flask(__name__)
@@ -26,6 +27,7 @@ ADMIN_PASSWORD = os.environ.get(
 
 
 def admin_required(function):
+
     @wraps(function)
     def wrapper(*args, **kwargs):
 
@@ -38,42 +40,23 @@ def admin_required(function):
 
 
 # =========================================================
-# DATABASE
+# POSTGRESQL DATABASE
 # =========================================================
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATABASE = os.path.join(BASE_DIR, "requests.db")
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
 
 def get_db():
-    conn = sqlite3.connect(DATABASE)
-    conn.row_factory = sqlite3.Row
-    return conn
 
-
-def create_database():
-
-    conn = get_db()
-    cursor = conn.cursor()
-
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS trip_requests (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            phone TEXT NOT NULL,
-            travel_date TEXT NOT NULL,
-            people INTEGER NOT NULL,
-            services TEXT,
-            preferred_time TEXT,
-            message TEXT,
-            status TEXT DEFAULT 'New',
-            quote_amount REAL DEFAULT 0,
-            payment_status TEXT DEFAULT 'Pending'
+    if not DATABASE_URL:
+        raise RuntimeError(
+            "DATABASE_URL environment variable is not set."
         )
-    """)
 
-    conn.commit()
-    conn.close()
+    return psycopg.connect(
+        DATABASE_URL,
+        row_factory=dict_row
+    )
 
 
 def ensure_database():
@@ -82,7 +65,7 @@ def ensure_database():
 
     conn.execute("""
         CREATE TABLE IF NOT EXISTS trip_requests (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id SERIAL PRIMARY KEY,
             name TEXT NOT NULL,
             phone TEXT NOT NULL,
             travel_date TEXT NOT NULL,
@@ -91,7 +74,7 @@ def ensure_database():
             preferred_time TEXT,
             message TEXT,
             status TEXT DEFAULT 'New',
-            quote_amount REAL DEFAULT 0,
+            quote_amount NUMERIC DEFAULT 0,
             payment_status TEXT DEFAULT 'Pending'
         )
     """)
@@ -100,7 +83,8 @@ def ensure_database():
     conn.close()
 
 
-create_database()
+# Create table when application starts
+ensure_database()
 
 
 # =========================================================
@@ -109,6 +93,7 @@ create_database()
 
 @app.route("/")
 def home():
+
     return render_template("index.html")
 
 
@@ -123,12 +108,28 @@ def plan():
 
         ensure_database()
 
-        name = request.form.get("name", "").strip()
-        phone = request.form.get("phone", "").strip()
-        travel_date = request.form.get("travel_date", "").strip()
-        people_text = request.form.get("people", "1").strip()
+        name = request.form.get(
+            "name",
+            ""
+        ).strip()
+
+        phone = request.form.get(
+            "phone",
+            ""
+        ).strip()
+
+        travel_date = request.form.get(
+            "travel_date",
+            ""
+        ).strip()
+
+        people_text = request.form.get(
+            "people",
+            "1"
+        ).strip()
 
         services_list = request.form.getlist("services")
+
         services = ", ".join(services_list)
 
         preferred_time = request.form.get(
@@ -151,8 +152,11 @@ def plan():
             return "Please select your travel date.", 400
 
         try:
+
             people = int(people_text)
+
         except (ValueError, TypeError):
+
             people = 1
 
         if people < 1:
@@ -175,7 +179,19 @@ def plan():
                 quote_amount,
                 payment_status
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s
+            )
+            RETURNING id
         """, (
             name,
             phone,
@@ -189,9 +205,9 @@ def plan():
             "Pending"
         ))
 
-        conn.commit()
+        request_id = cursor.fetchone()["id"]
 
-        request_id = cursor.lastrowid
+        conn.commit()
 
         conn.close()
 
@@ -228,6 +244,7 @@ def admin_login():
             username == ADMIN_USERNAME
             and password == ADMIN_PASSWORD
         ):
+
             session["admin_logged_in"] = True
 
             return redirect(
@@ -308,8 +325,13 @@ def update_request(request_id):
     ).strip()
 
     try:
-        quote_amount = float(quote_amount)
+
+        quote_amount = float(
+            quote_amount
+        )
+
     except (ValueError, TypeError):
+
         quote_amount = 0
 
     conn = get_db()
@@ -317,9 +339,9 @@ def update_request(request_id):
     conn.execute("""
         UPDATE trip_requests
         SET
-            quote_amount = ?,
-            status = ?
-        WHERE id = ?
+            quote_amount = %s,
+            status = %s
+        WHERE id = %s
     """, (
         quote_amount,
         status,
@@ -327,6 +349,7 @@ def update_request(request_id):
     ))
 
     conn.commit()
+
     conn.close()
 
     return redirect(
@@ -348,7 +371,7 @@ def quote(request_id):
     trip = conn.execute("""
         SELECT *
         FROM trip_requests
-        WHERE id = ?
+        WHERE id = %s
     """, (
         request_id,
     )).fetchone()
@@ -356,6 +379,7 @@ def quote(request_id):
     conn.close()
 
     if trip is None:
+
         return "Booking request not found.", 404
 
     return render_template(
@@ -380,14 +404,15 @@ def confirm_quote(request_id):
 
     conn.execute("""
         UPDATE trip_requests
-        SET status = ?
-        WHERE id = ?
+        SET status = %s
+        WHERE id = %s
     """, (
         "Confirmed",
         request_id
     ))
 
     conn.commit()
+
     conn.close()
 
     return redirect(
@@ -447,20 +472,22 @@ def update_payment(request_id):
     ]
 
     if payment_status not in allowed_statuses:
+
         payment_status = "Pending"
 
     conn = get_db()
 
     conn.execute("""
         UPDATE trip_requests
-        SET payment_status = ?
-        WHERE id = ?
+        SET payment_status = %s
+        WHERE id = %s
     """, (
         payment_status,
         request_id
     ))
 
     conn.commit()
+
     conn.close()
 
     return redirect(
