@@ -121,6 +121,26 @@
             margin-top: 6px;
         }
 
+        .payment-box {
+            background: #fff8e8;
+            border: 1px solid #f1d58a;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .payment-label {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .payment-status {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
         .confirm-button {
             width: 100%;
             background: #25D366;
@@ -192,6 +212,7 @@
             .price {
                 font-size: 28px;
             }
+
         }
 
     </style>
@@ -236,7 +257,20 @@
             <div class="detail">
 
                 <span class="label">
-                    Travel Date
+                    📞 Contact Number
+                </span>
+
+                <span class="value">
+                    {{ trip["phone"] }}
+                </span>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span class="label">
+                    📅 Travel Date
                 </span>
 
                 <span class="value">
@@ -249,7 +283,7 @@
             <div class="detail">
 
                 <span class="label">
-                    Number of People
+                    👥 Number of People
                 </span>
 
                 <span class="value">
@@ -262,7 +296,7 @@
             <div class="detail">
 
                 <span class="label">
-                    Services
+                    🏨 Services
                 </span>
 
                 <span class="value">
@@ -277,7 +311,7 @@
             <div class="detail">
 
                 <span class="label">
-                    Preferred Time
+                    🕐 Preferred Time
                 </span>
 
                 <span class="value">
@@ -300,6 +334,19 @@
 
             <div class="price">
                 ₹{{ "{:,.0f}".format(trip["quote_amount"] or 0) }}
+            </div>
+
+        </div>
+
+
+        <div class="payment-box">
+
+            <div class="payment-label">
+                💳 Payment Status
+            </div>
+
+            <div class="payment-status">
+                {{ trip["payment_status"] or "Pending" }}
             </div>
 
         </div>
@@ -343,7 +390,10 @@
             </p>
 
             <p>
-                We will contact you with the next details.
+                Payment Status:
+                <strong>
+                    {{ trip["payment_status"] or "Pending" }}
+                </strong>
             </p>
 
         </div>
