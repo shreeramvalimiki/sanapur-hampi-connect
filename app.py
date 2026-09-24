@@ -3,6 +3,7 @@ import os
 import psycopg
 from psycopg.rows import dict_row
 from functools import wraps
+from itsdangerous import URLSafeTimedSerializer, BadSignature, SignatureExpired
 
 app = Flask(__name__)
 
@@ -40,6 +41,56 @@ def admin_required(function):
 
 
 # =========================================================
+# SECURE QUOTE LINKS
+# =========================================================
+
+QUOTE_LINK_SALT = "sanapur-hampi-quote-v1"
+
+QUOTE_LINK_MAX_AGE = 60 * 60 * 24 * 180
+
+
+def get_quote_serializer():
+
+    return URLSafeTimedSerializer(
+        app.secret_key,
+        salt=QUOTE_LINK_SALT
+    )
+
+
+def create_quote_token(request_id):
+
+    serializer = get_quote_serializer()
+
+    return serializer.dumps({
+        "request_id": int(request_id)
+    })
+
+
+def get_request_id_from_token(token):
+
+    serializer = get_quote_serializer()
+
+    try:
+
+        data = serializer.loads(
+            token,
+            max_age=QUOTE_LINK_MAX_AGE
+        )
+
+        return int(data["request_id"])
+
+    except (
+        BadSignature,
+        SignatureExpired,
+        KeyError,
+        TypeError,
+        ValueError
+    ):
+
+        return None
+
+
+# =========================================================
 # POSTGRESQL DATABASE
 # =========================================================
 
@@ -49,6 +100,7 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 def get_db():
 
     if not DATABASE_URL:
+
         raise RuntimeError(
             "DATABASE_URL environment variable is not set."
         )
@@ -83,7 +135,6 @@ def ensure_database():
     conn.close()
 
 
-# Create table when application starts
 ensure_database()
 
 
@@ -128,9 +179,13 @@ def plan():
             "1"
         ).strip()
 
-        services_list = request.form.getlist("services")
+        services_list = request.form.getlist(
+            "services"
+        )
 
-        services = ", ".join(services_list)
+        services = ", ".join(
+            services_list
+        )
 
         preferred_time = request.form.get(
             "preferred_time",
@@ -143,12 +198,15 @@ def plan():
         ).strip()
 
         if not name:
+
             return "Please enter your name.", 400
 
         if not phone:
+
             return "Please enter your WhatsApp number.", 400
 
         if not travel_date:
+
             return "Please select your travel date.", 400
 
         try:
@@ -160,6 +218,7 @@ def plan():
             people = 1
 
         if people < 1:
+
             people = 1
 
         conn = get_db()
@@ -208,17 +267,29 @@ def plan():
         request_id = cursor.fetchone()["id"]
 
         conn.commit()
-
         conn.close()
 
         return redirect(
             url_for(
-                "quote",
+                "quote_waiting",
                 request_id=request_id
             )
         )
 
     return render_template("plan.html")
+
+
+# =========================================================
+# QUOTE WAITING PAGE
+# =========================================================
+
+@app.route("/quote-waiting/<int:request_id>")
+def quote_waiting(request_id):
+
+    return render_template(
+        "quote_waiting.html",
+        request_id=request_id
+    )
 
 
 # =========================================================
@@ -293,6 +364,17 @@ def admin():
         ORDER BY id DESC
     """).fetchall()
 
+    # Create a secure quote URL for every request
+    for trip in requests_data:
+
+        trip["quote_url"] = url_for(
+            "quote",
+            token=create_quote_token(
+                trip["id"]
+            ),
+            _external=True
+        )
+
     conn.close()
 
     return render_template(
@@ -334,6 +416,16 @@ def update_request(request_id):
 
         quote_amount = 0
 
+    allowed_statuses = [
+        "New",
+        "Quote Sent",
+        "Confirmed"
+    ]
+
+    if status not in allowed_statuses:
+
+        status = "New"
+
     conn = get_db()
 
     conn.execute("""
@@ -349,7 +441,6 @@ def update_request(request_id):
     ))
 
     conn.commit()
-
     conn.close()
 
     return redirect(
@@ -358,11 +449,22 @@ def update_request(request_id):
 
 
 # =========================================================
-# CUSTOMER QUOTE
+# SECURE CUSTOMER QUOTE
 # =========================================================
 
-@app.route("/quote/<int:request_id>")
-def quote(request_id):
+@app.route("/quote/<token>")
+def quote(token):
+
+    request_id = get_request_id_from_token(
+        token
+    )
+
+    if request_id is None:
+
+        return """
+        <h2>Quote link is invalid or expired.</h2>
+        <p>Please contact Sanapur × Hampi Connect for a new quote link.</p>
+        """, 403
 
     ensure_database()
 
@@ -384,19 +486,31 @@ def quote(request_id):
 
     return render_template(
         "quote.html",
-        trip=trip
+        trip=trip,
+        quote_token=token
     )
 
 
 # =========================================================
-# CONFIRM QUOTE
+# CONFIRM SECURE QUOTE
 # =========================================================
 
 @app.route(
-    "/quote/<int:request_id>/confirm",
+    "/quote/<token>/confirm",
     methods=["POST"]
 )
-def confirm_quote(request_id):
+def confirm_quote(token):
+
+    request_id = get_request_id_from_token(
+        token
+    )
+
+    if request_id is None:
+
+        return """
+        <h2>Quote link is invalid or expired.</h2>
+        <p>Please contact Sanapur × Hampi Connect for a new quote link.</p>
+        """, 403
 
     ensure_database()
 
@@ -412,11 +526,13 @@ def confirm_quote(request_id):
     ))
 
     conn.commit()
-
     conn.close()
 
     return redirect(
-        url_for("bookings")
+        url_for(
+            "quote",
+            token=token
+        )
     )
 
 
@@ -487,7 +603,6 @@ def update_payment(request_id):
     ))
 
     conn.commit()
-
     conn.close()
 
     return redirect(
