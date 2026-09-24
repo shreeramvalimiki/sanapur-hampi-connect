@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
@@ -219,12 +220,15 @@
 
 </head>
 
+
 <body>
 
 
 <div class="top-bar">
 
-    <h1>🌴 Sanapur × Hampi Connect</h1>
+    <h1>
+        🌴 Sanapur × Hampi Connect
+    </h1>
 
 </div>
 
@@ -356,7 +360,7 @@
 
         <form
             method="POST"
-            action="{{ url_for('confirm_quote', request_id=trip['id']) }}"
+            action="{{ url_for('confirm_quote', token=quote_token) }}"
         >
 
             <button
@@ -426,4 +430,5 @@
 
 
 </body>
+
 </html>
