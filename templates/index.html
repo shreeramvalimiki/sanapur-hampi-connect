@@ -1,534 +1,589 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Sanapur × Hampi Connect</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f7f1e6;
-            color: #23352a;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        img {
-            width: 100%;
-            display: block;
-        }
-
-        /* ================= NAVBAR ================= */
-
-        .navbar {
-            height: 68px;
-            background: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 4%;
-            border-bottom: 1px solid #e7e0d4;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #173e2a;
-        }
-
-        .logo-icon {
-            font-size: 35px;
-        }
-
-        .logo-text {
-            font-size: 15px;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        .logo-text span {
-            display: block;
-            font-size: 9px;
-            letter-spacing: 3px;
-            text-align: center;
-            margin-top: 2px;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-            font-size: 12px;
-            color: #27392e;
-        }
-
-        .nav-links a:hover {
-            color: #b46d25;
-        }
-
-        .whatsapp-top {
-            background: #239447;
-            color: white;
-            padding: 10px 18px;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 12px;
-        }
-
-        /* ================= HERO ================= */
-
-        .hero {
-            min-height: 480px;
-            background:
-                linear-gradient(
-                    90deg,
-                    rgba(12, 42, 25, 0.72),
-                    rgba(12, 42, 25, 0.22),
-                    rgba(12, 42, 25, 0.08)
-                ),
-                url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Sanapur_Lake.jpg")
-                center center / cover no-repeat;
-
-            display: flex;
-            align-items: center;
-        }
-
-        .hero-content {
-            width: 90%;
-            max-width: 1150px;
-            margin: auto;
-            color: white;
-            padding: 70px 0;
-        }
-
-        .hero-content h1 {
-            font-family: Georgia, serif;
-            font-size: clamp(42px, 6vw, 70px);
-            line-height: 0.98;
-            max-width: 650px;
-            letter-spacing: 1px;
-        }
-
-        .hero-line {
-            width: 45px;
-            height: 3px;
-            background: white;
-            margin: 18px 0;
-        }
-
-        .hero-content h2 {
-            font-size: 22px;
-            margin-bottom: 8px;
-        }
-
-        .hero-content p {
-            font-size: 16px;
-            max-width: 440px;
-            line-height: 1.5;
-            margin-bottom: 25px;
-        }
-
-        .plan-button {
-            display: inline-block;
-            background: #c47a2b;
-            color: white;
-            padding: 13px 22px;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .plan-button:hover {
-            background: #a8621e;
-        }
-
-        /* ================= SERVICES ================= */
-
-        .services-wrapper {
-            width: 90%;
-            max-width: 1150px;
-            margin: -25px auto 0;
-            position: relative;
-            z-index: 5;
-        }
-
-        .services {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 14px;
-        }
-
-        .service-card {
-            background: white;
-            border-radius: 13px;
-            overflow: hidden;
-            box-shadow: 0 8px 22px rgba(30, 55, 40, 0.12);
-        }
-
-        .service-image {
-            height: 150px;
-            object-fit: cover;
-        }
-
-        .service-content {
-            padding: 16px;
-        }
-
-        .service-content h3 {
-            font-family: Georgia, serif;
-            font-size: 17px;
-            color: #244531;
-            margin-bottom: 5px;
-        }
-
-        .service-content p {
-            font-size: 11px;
-            color: #667068;
-            line-height: 1.45;
-        }
-
-        /* ================= SANAPUR ================= */
-
-        .sanapur-section {
-            width: 90%;
-            max-width: 1150px;
-            margin: auto;
-            padding: 70px 0;
-        }
-
-        .sanapur-grid {
-            display: grid;
-            grid-template-columns: 0.8fr 1.7fr;
-            align-items: center;
-            gap: 35px;
-        }
-
-        .section-small-title {
-            color: #b8782d;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-
-        .sanapur-text h2 {
-            font-family: Georgia, serif;
-            font-size: 42px;
-            line-height: 1;
-            color: #21482f;
-        }
-
-        .small-line {
-            width: 45px;
-            height: 3px;
-            background: #b8782d;
-            margin: 15px 0;
-        }
-
-        .sanapur-text p {
-            color: #59645d;
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .know-button {
-            display: inline-block;
-            background: #173e2a;
-            color: white;
-            padding: 11px 18px;
-            border-radius: 22px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .sanapur-image {
-            height: 330px;
-            border-radius: 0 0 0 0;
-            overflow: hidden;
-        }
-
-        .sanapur-image img {
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* ================= HAMPI ================= */
-
-        .hampi-section {
-            background: #eadbc6;
-            padding: 65px 0;
-        }
-
-        .hampi-container {
-            width: 90%;
-            max-width: 1150px;
-            margin: auto;
-        }
-
-        .hampi-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 0.8fr;
-            gap: 35px;
-            align-items: center;
-        }
-
-        .hampi-image {
-            height: 360px;
-            overflow: hidden;
-        }
-
-        .hampi-image img {
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .hampi-text h2 {
-            font-family: Georgia, serif;
-            font-size: 43px;
-            line-height: 1;
-            color: #68401d;
-        }
-
-        .hampi-text p {
-            color: #5d554b;
-            font-size: 14px;
-            line-height: 1.55;
-            margin-bottom: 20px;
-        }
-
-        .hampi-button {
-            display: inline-block;
-            background: #8a511d;
-            color: white;
-            padding: 11px 20px;
-            border-radius: 22px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .temple-image {
-            margin-top: 30px;
-            height: 300px;
-            overflow: hidden;
-        }
-
-        .temple-image img {
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* ================= CTA ================= */
-
-        .cta {
-            min-height: 300px;
-            background:
-                linear-gradient(
-                    90deg,
-                    rgba(7, 35, 20, 0.78),
-                    rgba(7, 35, 20, 0.32)
-                ),
-                url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Sanapur_Lake.jpg")
-                center / cover no-repeat;
-
-            color: white;
-            display: flex;
-            align-items: center;
-        }
-
-        .cta-inner {
-            width: 90%;
-            max-width: 1150px;
-            margin: auto;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 25px;
-        }
-
-        .cta h2 {
-            font-family: Georgia, serif;
-            font-size: 42px;
-            line-height: 1;
-        }
-
-        .cta p {
-            margin-top: 12px;
-            font-size: 14px;
-        }
-
-        .whatsapp-cta {
-            background: #239447;
-            color: white;
-            padding: 15px 23px;
-            border-radius: 30px;
-            font-weight: bold;
-            white-space: nowrap;
-        }
-
-        /* ================= FOOTER ================= */
-
-        footer {
-            background: #123b27;
-            color: white;
-            padding: 35px 0;
-        }
-
-        .footer-inner {
-            width: 90%;
-            max-width: 1150px;
-            margin: auto;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .footer-logo {
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        .footer-logo span {
-            display: block;
-            font-size: 8px;
-            letter-spacing: 3px;
-            text-align: center;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 15px;
-            font-size: 11px;
-        }
-
-        .footer-links a:hover {
-            color: #d4a15e;
-        }
-
-        .footer-note {
-            font-size: 10px;
-            opacity: 0.7;
-            margin-top: 10px;
-            max-width: 650px;
-        }
-
-        /* ================= MOBILE ================= */
-
-        @media (max-width: 850px) {
-
-            .navbar {
-                height: auto;
-                padding: 12px 5%;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .services {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .sanapur-grid,
-            .hampi-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-inner {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .footer-inner {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
-        @media (max-width: 550px) {
-
-            .hero {
-                min-height: 560px;
-            }
-
-            .hero-content h1 {
-                font-size: 43px;
-            }
-
-            .services {
-                grid-template-columns: 1fr;
-            }
-
-            .sanapur-text h2,
-            .hampi-text h2 {
-                font-size: 36px;
-            }
-
-            .cta h2 {
-                font-size: 34px;
-            }
-
-            .footer-links {
-                flex-wrap: wrap;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sanapur × Hampi Connect</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f5eee2;
+    color:#26362b;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+img{
+    width:100%;
+    display:block;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    height:72px;
+    background:#fffdf9;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 4%;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    border-bottom:1px solid #eee5d8;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:#173d29;
+}
+
+.logo-symbol{
+    font-size:34px;
+}
+
+.logo-name{
+    font-family:Georgia,serif;
+    font-weight:bold;
+    font-size:15px;
+    letter-spacing:1px;
+}
+
+.logo-sub{
+    display:block;
+    font-family:Arial,sans-serif;
+    text-align:center;
+    font-size:8px;
+    letter-spacing:3px;
+    margin-top:2px;
+}
+
+.navigation{
+    display:flex;
+    align-items:center;
+    gap:24px;
+    font-size:12px;
+}
+
+.navigation a:hover{
+    color:#b66e25;
+}
+
+.whatsapp-header{
+    background:#209447;
+    color:#fff;
+    padding:10px 18px;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:bold;
+    text-align:center;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    min-height:570px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(13,45,27,.78),
+            rgba(13,45,27,.30),
+            rgba(13,45,27,.08)
+        ),
+        url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Sanapur_Lake.jpg")
+        center center / cover no-repeat;
+
+    display:flex;
+    align-items:center;
+}
+
+.hero-content{
+    width:90%;
+    max-width:1150px;
+    margin:auto;
+    color:white;
+    padding:80px 0;
+}
+
+.hero-title{
+    font-family:Georgia,serif;
+    font-size:clamp(48px,7vw,82px);
+    line-height:.93;
+    font-weight:normal;
+    letter-spacing:1px;
+}
+
+.hero-title span{
+    font-size:.55em;
+}
+
+.hero-divider{
+    width:55px;
+    height:3px;
+    background:white;
+    margin:25px 0;
+}
+
+.hero-heading{
+    font-size:25px;
+    margin-bottom:7px;
+}
+
+.hero-text{
+    font-size:17px;
+    max-width:550px;
+    line-height:1.5;
+    margin-bottom:28px;
+}
+
+.plan-button{
+    display:inline-block;
+    background:#ca7b27;
+    color:white;
+    padding:15px 26px;
+    border-radius:30px;
+    font-weight:bold;
+    font-size:14px;
+}
+
+.plan-button:hover{
+    background:#a9601d;
+}
+
+/* ================= SERVICE CARDS ================= */
+
+.services-area{
+    width:90%;
+    max-width:1150px;
+    margin:-35px auto 0;
+    position:relative;
+    z-index:5;
+}
+
+.services{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.card{
+    background:#fff;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 10px 28px rgba(35,54,43,.13);
+}
+
+.card-image{
+    height:185px;
+    overflow:hidden;
+}
+
+.card-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:18px;
+}
+
+.card-title{
+    color:#21462f;
+    font-family:Georgia,serif;
+    font-size:19px;
+    margin-bottom:6px;
+}
+
+.card-text{
+    font-size:12px;
+    line-height:1.5;
+    color:#647068;
+}
+
+/* ================= SCOOTER IMAGE ================= */
+
+.scooter-images{
+    height:100%;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    background:#eee9df;
+    gap:2px;
+}
+
+.scooter-images img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+}
+
+/* ================= SANAPUR ================= */
+
+.sanapur{
+    width:90%;
+    max-width:1150px;
+    margin:auto;
+    padding:80px 0;
+}
+
+.sanapur-grid{
+    display:grid;
+    grid-template-columns:.75fr 1.55fr;
+    gap:38px;
+    align-items:center;
+}
+
+.small-heading{
+    color:#b87529;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.sanapur-title{
+    font-family:Georgia,serif;
+    font-size:48px;
+    line-height:1;
+    color:#1c4a30;
+}
+
+.gold-line{
+    width:48px;
+    height:3px;
+    background:#b87529;
+    margin:17px 0;
+}
+
+.sanapur-description{
+    color:#59655d;
+    font-size:14px;
+    line-height:1.6;
+    margin-bottom:23px;
+}
+
+.dark-button{
+    display:inline-block;
+    background:#173d29;
+    color:white;
+    padding:12px 21px;
+    border-radius:25px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.sanapur-photo{
+    height:390px;
+    overflow:hidden;
+}
+
+.sanapur-photo img{
+    height:100%;
+    object-fit:cover;
+}
+
+/* ================= HAMPI ================= */
+
+.hampi{
+    background:#eadcc8;
+    padding:75px 0;
+}
+
+.hampi-container{
+    width:90%;
+    max-width:1150px;
+    margin:auto;
+}
+
+.hampi-grid{
+    display:grid;
+    grid-template-columns:1.5fr .8fr;
+    gap:40px;
+    align-items:center;
+}
+
+.hampi-photo{
+    height:390px;
+    overflow:hidden;
+}
+
+.hampi-photo img{
+    height:100%;
+    object-fit:cover;
+}
+
+.hampi-title{
+    font-family:Georgia,serif;
+    font-size:50px;
+    color:#71451f;
+    line-height:1;
+}
+
+.hampi-description{
+    color:#5d554b;
+    font-size:14px;
+    line-height:1.6;
+    margin-bottom:23px;
+}
+
+.hampi-button{
+    display:inline-block;
+    background:#8b531d;
+    color:#fff;
+    padding:12px 22px;
+    border-radius:25px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.temple{
+    margin-top:35px;
+    height:320px;
+    overflow:hidden;
+}
+
+.temple img{
+    height:100%;
+    object-fit:cover;
+}
+
+/* ================= CTA ================= */
+
+.cta{
+    min-height:320px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(5,35,20,.84),
+            rgba(5,35,20,.35)
+        ),
+        url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Sanapur_Lake.jpg")
+        center / cover no-repeat;
+
+    color:white;
+    display:flex;
+    align-items:center;
+}
+
+.cta-inner{
+    width:90%;
+    max-width:1150px;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:30px;
+}
+
+.cta-title{
+    font-family:Georgia,serif;
+    font-size:48px;
+    line-height:1;
+}
+
+.cta-text{
+    margin-top:12px;
+    font-size:14px;
+}
+
+.whatsapp-cta{
+    background:#219447;
+    color:white;
+    padding:16px 24px;
+    border-radius:30px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    background:#123b27;
+    color:white;
+    padding:40px 0;
+}
+
+.footer-inner{
+    width:90%;
+    max-width:1150px;
+    margin:auto;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:30px;
+}
+
+.footer-name{
+    font-family:Georgia,serif;
+    font-size:17px;
+    font-weight:bold;
+}
+
+.footer-sub{
+    font-size:8px;
+    letter-spacing:3px;
+    margin-top:3px;
+}
+
+.footer-links{
+    display:flex;
+    gap:18px;
+    font-size:11px;
+    flex-wrap:wrap;
+}
+
+.footer-links a:hover{
+    color:#d8a05e;
+}
+
+.credits{
+    margin-top:12px;
+    max-width:650px;
+    font-size:9px;
+    line-height:1.5;
+    opacity:.65;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:900px){
+
+    .navigation{
+        display:none;
+    }
+
+    .services{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .sanapur-grid,
+    .hampi-grid{
+        grid-template-columns:1fr;
+    }
+
+    .cta-inner{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .footer-inner{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+}
+
+@media(max-width:560px){
+
+    .header{
+        height:65px;
+    }
+
+    .whatsapp-header{
+        padding:8px 12px;
+        font-size:10px;
+    }
+
+    .hero{
+        min-height:570px;
+    }
+
+    .hero-title{
+        font-size:48px;
+    }
+
+    .services{
+        grid-template-columns:1fr;
+    }
+
+    .sanapur-title,
+    .hampi-title{
+        font-size:40px;
+    }
+
+    .cta-title{
+        font-size:38px;
+    }
+
+    .scooter-images{
+        height:100%;
+    }
+}
+</style>
 </head>
+
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
+<!-- ================= HEADER ================= -->
 
-<header class="navbar">
+<header class="header">
 
     <a href="/" class="logo">
-        <div class="logo-icon">⛰️</div>
 
-        <div class="logo-text">
-            SANAPUR × HAMPI
-            <span>CONNECT</span>
+        <div class="logo-symbol">
+            ⛰️
         </div>
+
+        <div>
+            <div class="logo-name">
+                SANAPUR × HAMPI
+            </div>
+
+            <div class="logo-sub">
+                CONNECT
+            </div>
+        </div>
+
     </a>
 
-    <nav class="nav-links">
+
+    <nav class="navigation">
+
         <a href="/">Home</a>
+
         <a href="#services">Stays</a>
-        <a href="#services">Scooter Rentals</a>
+
+        <a href="#scooters">Scooter Rentals</a>
+
         <a href="#hampi">Hampi Sightseeing</a>
+
         <a href="#coracle">Coracle Rides</a>
+
         <a href="/plan">Plan Your Trip</a>
+
     </nav>
 
+
     <a
+        class="whatsapp-header"
         href="https://wa.me/918431007746?text=Hi%20Sanapur%20%C3%97%20Hampi%20Connect%2C%20I%20want%20to%20plan%20a%20trip."
         target="_blank"
-        class="whatsapp-top"
     >
         💬 WhatsApp<br>
-        <small>+91 84310 07746</small>
+        +91 84310 07746
     </a>
 
 </header>
@@ -540,20 +595,30 @@
 
     <div class="hero-content">
 
-        <h1>
-            SANAPUR × HAMPI
+        <h1 class="hero-title">
+
+            SANAPUR ×
             <br>
-            <span style="font-size:0.55em;">CONNECT</span>
+            HAMPI
+            <br>
+
+            <span>CONNECT</span>
+
         </h1>
 
-        <div class="hero-line"></div>
 
-        <h2>Where nature meets history.</h2>
+        <div class="hero-divider"></div>
 
-        <p>
-            Explore Sanapur and Hampi through
-            local experiences.
+
+        <h2 class="hero-heading">
+            Where nature meets history.
+        </h2>
+
+
+        <p class="hero-text">
+            Explore Sanapur and Hampi through local experiences.
         </p>
+
 
         <a href="/plan" class="plan-button">
             Plan Your Trip →
@@ -566,148 +631,183 @@
 
 <!-- ================= SERVICES ================= -->
 
-<section class="services-wrapper" id="services">
+<section class="services-area" id="services">
 
     <div class="services">
 
+
         <!-- STAYS -->
 
-        <div class="service-card">
+        <article class="card">
 
-            <img
-                class="service-image"
-                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Sanapur_Lake.jpg"
-                alt="Sanapur"
-            >
+            <div class="card-image">
 
-            <div class="service-content">
+                <img
+                    src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Sanapur_Lake.jpg"
+                    alt="Sanapur natural landscape"
+                >
 
-                <h3>🏡 Stays</h3>
+            </div>
 
-                <p>
-                    Clean and comfortable
-                    local stays in Sanapur.
+            <div class="card-content">
+
+                <h3 class="card-title">
+                    🏡 Stays
+                </h3>
+
+                <p class="card-text">
+                    Clean and comfortable local stays in Sanapur.
                 </p>
 
             </div>
 
-        </div>
+        </article>
 
 
-        <!-- SCOOTERS -->
+        <!-- SCOOTER -->
 
-        <div class="service-card">
+        <article class="card" id="scooters">
 
-            <img
-                class="service-image"
-                src="/static/images/honda-activa.jpg"
-                alt="White and black Honda Activa scooters"
-            >
+            <div class="card-image scooter-images">
 
-            <div class="service-content">
+                <!-- White Activa -->
 
-                <h3>🛵 Scooter Rentals</h3>
+                <img
+                    src="https://www.team-bhp.com/forum/attachments/motorbikes/1390188d1466761590-review-honda-activa-125-pearl-amazing-white-activa-125-pearl-amazing-white.jpg"
+                    alt="White Honda Activa"
+                    onerror="this.src='https://apollo.olx.in/v1/files/kyncrj1wxsy82-IN/image'"
+                >
 
-                <p>
-                    Well-maintained Honda Activa
-                    scooters for your local travel.
+
+                <!-- Black Activa -->
+
+                <img
+                    src="https://apollo.olx.in/v1/files/kyncrj1wxsy82-IN/image"
+                    alt="Black Honda Activa"
+                >
+
+            </div>
+
+
+            <div class="card-content">
+
+                <h3 class="card-title">
+                    🛵 Scooter Rentals
+                </h3>
+
+                <p class="card-text">
+                    Well-maintained Honda Activa scooters for your local travel.
                 </p>
 
             </div>
 
-        </div>
+        </article>
 
 
         <!-- HAMPI -->
 
-        <div class="service-card">
+        <article class="card">
 
-            <img
-                class="service-image"
-                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Hampi_stone_chariot.jpg"
-                alt="Hampi Stone Chariot"
-            >
+            <div class="card-image">
 
-            <div class="service-content">
+                <img
+                    src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Hampi_stone_chariot.jpg"
+                    alt="Hampi Stone Chariot"
+                >
 
-                <h3>🏛️ Hampi Sightseeing</h3>
+            </div>
 
-                <p>
-                    Explore ancient temples
-                    and heritage sites.
+
+            <div class="card-content">
+
+                <h3 class="card-title">
+                    🏛️ Hampi Sightseeing
+                </h3>
+
+                <p class="card-text">
+                    Explore ancient temples and heritage sites.
                 </p>
 
             </div>
 
-        </div>
+        </article>
 
 
         <!-- CORACLE -->
 
-        <div class="service-card" id="coracle">
+        <article class="card" id="coracle">
 
-            <img
-                class="service-image"
-                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Theppa.jpg"
-                alt="Traditional coracle ride"
-            >
+            <div class="card-image">
 
-            <div class="service-content">
+                <img
+                    src="https://live.staticflickr.com/3846/32997953522_09d2365d19_b.jpg"
+                    alt="Local coracle boatman at Sanapur Lake"
+                >
 
-                <h3>🛶 Coracle Rides</h3>
+            </div>
 
-                <p>
-                    Traditional coracle rides
-                    in Sanapur Lake.
+
+            <div class="card-content">
+
+                <h3 class="card-title">
+                    🛶 Coracle Rides
+                </h3>
+
+                <p class="card-text">
+                    Traditional coracle rides in Sanapur Lake.
                 </p>
 
             </div>
 
-        </div>
+        </article>
+
 
     </div>
 
 </section>
 
 
-<!-- ================= SANAPUR ================= -->
+<!-- ================= EXPERIENCE SANAPUR ================= -->
 
-<section class="sanapur-section">
+<section class="sanapur">
 
     <div class="sanapur-grid">
 
-        <div class="sanapur-text">
 
-            <div class="section-small-title">
+        <div>
+
+            <div class="small-heading">
                 Experience
             </div>
 
-            <h2>
+
+            <h2 class="sanapur-title">
                 Sanapur
             </h2>
 
-            <div class="small-line"></div>
 
-            <p>
-                A calm lake surrounded by
-                rocky hills, greenery and
-                traditional coracle rides.
-                Feel the simplicity and
-                beauty of Sanapur.
+            <div class="gold-line"></div>
+
+
+            <p class="sanapur-description">
+                A calm lake surrounded by rocky hills,
+                greenery and traditional coracle rides.
+                Feel the simplicity and beauty of Sanapur.
             </p>
 
-            <a href="/plan" class="know-button">
+
+            <a href="/plan" class="dark-button">
                 Know More →
             </a>
 
         </div>
 
 
-        <div class="sanapur-image">
+        <div class="sanapur-photo">
 
             <img
                 src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Sanapur_Lake.jpg"
-                alt="Sanapur Lake and rocky hills"
+                alt="Sanapur Lake surrounded by rocky hills"
             >
 
         </div>
@@ -719,13 +819,15 @@
 
 <!-- ================= HAMPI ================= -->
 
-<section class="hampi-section" id="hampi">
+<section class="hampi" id="hampi">
 
     <div class="hampi-container">
 
+
         <div class="hampi-grid">
 
-            <div class="hampi-image">
+
+            <div class="hampi-photo">
 
                 <img
                     src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Hampi_stone_chariot.jpg"
@@ -735,24 +837,27 @@
             </div>
 
 
-            <div class="hampi-text">
+            <div>
 
-                <div class="section-small-title">
+                <div class="small-heading">
                     Discover
                 </div>
 
-                <h2>
+
+                <h2 class="hampi-title">
                     Hampi
                 </h2>
 
-                <div class="small-line"></div>
 
-                <p>
-                    Ancient temples, stunning
-                    rocky landscapes and a rich
-                    cultural heritage that tells
+                <div class="gold-line"></div>
+
+
+                <p class="hampi-description">
+                    Ancient temples, stunning rocky landscapes
+                    and a rich cultural heritage that tells
                     timeless stories.
                 </p>
+
 
                 <a href="/plan" class="hampi-button">
                     Explore Hampi →
@@ -760,13 +865,14 @@
 
             </div>
 
+
         </div>
 
 
-        <div class="temple-image">
+        <div class="temple">
 
             <img
-                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Virupaksha_temple_hampi.jpg"
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Hampi_virupaksha_temple.jpg"
                 alt="Virupaksha Temple Hampi"
             >
 
@@ -783,15 +889,17 @@
 
     <div class="cta-inner">
 
+
         <div>
 
-            <h2>
+            <h2 class="cta-title">
                 Ready to explore
                 <br>
                 Sanapur & Hampi?
             </h2>
 
-            <p>
+
+            <p class="cta-text">
                 Plan your stay, scooter rental,
                 coracle ride and sightseeing with us.
             </p>
@@ -800,14 +908,15 @@
 
 
         <a
+            class="whatsapp-cta"
             href="https://wa.me/918431007746?text=Hi%20Sanapur%20%C3%97%20Hampi%20Connect%2C%20I%20want%20to%20plan%20a%20trip."
             target="_blank"
-            class="whatsapp-cta"
         >
             💬 Chat on WhatsApp
             <br>
             +91 84310 07746
         </a>
+
 
     </div>
 
@@ -816,22 +925,26 @@
 
 <!-- ================= FOOTER ================= -->
 
-<footer>
+<footer class="footer">
 
     <div class="footer-inner">
 
+
         <div>
 
-            <div class="footer-logo">
-
+            <div class="footer-name">
                 SANAPUR × HAMPI
-
-                <span>CONNECT</span>
-
             </div>
 
-            <div class="footer-note">
-                Local experiences • Nature • Heritage • Simplicity
+            <div class="footer-sub">
+                CONNECT
+            </div>
+
+
+            <div class="credits">
+                Sanapur Lake photo: Japleenpasricha, Wikimedia Commons,
+                CC BY-SA 4.0. Hampi photographs are from Wikimedia Commons
+                under their stated Creative Commons licenses.
             </div>
 
         </div>
@@ -839,23 +952,37 @@
 
         <div class="footer-links">
 
-            <a href="/">Home</a>
+            <a href="/">
+                Home
+            </a>
 
-            <a href="#services">Stays</a>
+            <a href="#services">
+                Stays
+            </a>
 
-            <a href="#services">Scooter Rentals</a>
+            <a href="#scooters">
+                Scooter Rentals
+            </a>
 
-            <a href="#hampi">Hampi Sightseeing</a>
+            <a href="#hampi">
+                Hampi Sightseeing
+            </a>
 
-            <a href="#coracle">Coracle Rides</a>
+            <a href="#coracle">
+                Coracle Rides
+            </a>
 
-            <a href="/plan">Plan Your Trip</a>
+            <a href="/plan">
+                Plan Your Trip
+            </a>
 
         </div>
+
 
     </div>
 
 </footer>
+
 
 </body>
 </html>
