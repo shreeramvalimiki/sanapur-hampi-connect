@@ -1,112 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Request Received | Sanapur × Hampi Connect</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-* {
-    box-sizing: border-box;
-}
+    <title>Request Received | Sanapur × Hampi Connect</title>
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f7f5;
-    color: #222;
-}
+    <style>
 
-.container {
-    max-width: 600px;
-    margin: 60px auto;
-    padding: 20px;
-}
+        * {
+            box-sizing: border-box;
+        }
 
-.card {
-    background: white;
-    padding: 35px 25px;
-    border-radius: 18px;
-    text-align: center;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-}
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7f5;
+            color: #222;
+        }
 
-.logo {
-    font-size: 28px;
-    font-weight: bold;
-    color: #12372a;
-    margin-bottom: 25px;
-}
+        .container {
+            max-width: 620px;
+            margin: 50px auto;
+            padding: 20px;
+        }
 
-.icon {
-    font-size: 55px;
-}
+        .card {
+            background: white;
+            padding: 40px 28px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
 
-h1 {
-    color: #12372a;
-    margin-bottom: 10px;
-}
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #12372a;
+            margin-bottom: 25px;
+        }
 
-p {
-    color: #666;
-    line-height: 1.6;
-}
+        .icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
 
-.request {
-    background: #f7faf8;
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 25px;
-    font-weight: bold;
-}
+        h1 {
+            color: #12372a;
+            margin-bottom: 12px;
+        }
 
-.note {
-    margin-top: 25px;
-    font-size: 14px;
-}
-</style>
+        p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .request {
+            background: #f7faf8;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 25px 0;
+            font-weight: bold;
+            color: #12372a;
+        }
+
+        .whatsapp {
+            display: block;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 9px;
+            font-weight: bold;
+            margin-top: 25px;
+        }
+
+        .whatsapp:hover {
+            background: #1ebe5d;
+        }
+
+        .home {
+            display: block;
+            margin-top: 18px;
+            color: #12372a;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .note {
+            margin-top: 25px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 550px) {
+
+            .container {
+                margin: 20px auto;
+                padding: 12px;
+            }
+
+            .card {
+                padding: 30px 20px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+        }
+
+    </style>
+
 </head>
 
+
 <body>
+
 
 <div class="container">
 
     <div class="card">
 
+
         <div class="logo">
             🌴 Sanapur × Hampi Connect
         </div>
+
 
         <div class="icon">
             ✅
         </div>
 
+
         <h1>
             Request Received!
         </h1>
+
 
         <p>
             Thank you for planning your Hampi trip with us.
         </p>
 
+
         <p>
             We have received your trip request.
-            Our team will prepare your quotation and send it to you on WhatsApp.
+            Our team will check your requirements and prepare your quotation.
         </p>
+
 
         <div class="request">
             Request #{{ request_id }}
         </div>
 
-        <p class="note">
-            Please keep an eye on your WhatsApp.
-            Your quotation link will be sent there.
+
+        <p>
+            Your quotation will be sent to you on WhatsApp.
         </p>
+
+
+        <a
+            href="https://wa.me/918431007746?text=Hello%20Sanapur%20%C3%97%20Hampi%20Connect%2C%20I%20have%20submitted%20a%20trip%20request%20and%20would%20like%20to%20know%20about%20my%20quotation."
+            class="whatsapp"
+            target="_blank"
+        >
+            💬 Chat With Us on WhatsApp
+        </a>
+
+
+        <p class="note">
+            Please keep an eye on your WhatsApp for your quotation link.
+        </p>
+
+
+        <a href="/" class="home">
+            ← Back to Home
+        </a>
+
 
     </div>
 
 </div>
 
+
 </body>
+
 </html>
